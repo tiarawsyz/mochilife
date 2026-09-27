@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FFE5EC">
+  <title>MochiLife OS Pro - Visual Knowledge & Life OS</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'pastel-pink': '#FFE5EC',
+            'pastel-lavender': '#E8DFF5',
+            'pastel-mint': '#E8F5E9',
+            'pastel-yellow': '#FFF9DB',
+            'pastel-peach': '#FCE1E4',
+            'cocoa-dark': '#4A3B32',
+            'cocoa-soft': '#6E5D53',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap');
+    * { font-family: 'Quicksand', sans-serif; }
+    
+    /* Kursor Kelinci Putih Kontras Tinggi (Double Stroke Cokelat Gelap + Bayangan) */
+    .cursor-bunny {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><filter id='sh' x='-20%' y='-20%' width='150%' height='150%'><feDropShadow dx='1' dy='2' stdDeviation='1.5' flood-color='%234A3B32' flood-opacity='0.35'/></filter><g filter='url(%23sh)'><path d='M10 6 C9 1, 13 1, 13 7 L14 13 C14 13, 19 13, 20 7 C21 1, 25 1, 24 7 L23 13 C27 15, 29 19, 29 23 C29 28, 24 31, 17 31 C10 31, 5 28, 5 23 C5 19, 7 15, 11 13 Z' fill='%23FFFFFF' stroke='%2338271E' stroke-width='2.2' stroke-linejoin='round'/><path d='M11 5 C10.5 3, 12 3, 12 6 L12.5 11' fill='%23FFB7B2'/><path d='M22 5 C22.5 3, 21 3, 21 6 L20.5 11' fill='%23FFB7B2'/><circle cx='13' cy='20' r='1.6' fill='%2338271E'/><circle cx='21' cy='20' r='1.6' fill='%2338271E'/><ellipse cx='17' cy='23' rx='1.5' ry='1' fill='%23FF8E9E'/></g></svg>"), auto;
+    }
+    .cursor-boba {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'><g><rect x='10' y='11' width='14' height='17' rx='3' fill='%23D4A373' stroke='%234A3B32' stroke-width='2'/><circle cx='13' cy='23' r='1.4' fill='%23281810'/><circle cx='17' cy='24' r='1.4' fill='%23281810'/></g></svg>"), pointer;
+    }
+    .cursor-cat {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'><g><path d='M8 18 C8 12, 24 12, 24 18 C24 23, 21 27, 16 27 C11 27, 8 23, 8 18 Z' fill='%23FFFFFF' stroke='%234A3B32' stroke-width='2'/><circle cx='16' cy='13' r='2' fill='%23FFB7B2'/></g></svg>"), pointer;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #E8DFF5; border-radius: 999px; }
+  </style>
+</head>
+<body class="bg-[#FFFDF9] text-cocoa-dark cursor-bunny min-h-screen flex flex-col" id="appBody">
+
+  <!-- ================= HEADER ================= -->
+  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-pastel-pink px-4 py-2.5 flex flex-wrap justify-between items-center gap-3">
+    <div class="flex items-center gap-2">
+      <span class="text-2xl" id="mascotIcon">🐰</span>
+      <div>
+        <h1 class="text-lg font-bold text-cocoa-dark flex items-center gap-1.5">
+          MochiLife <span class="text-[10px] bg-pastel-pink text-[#8A3347] px-2 py-0.5 rounded-full font-bold">READY-TO-USE</span>
+        </h1>
+        <p class="text-[11px] text-cocoa-soft">Visual Knowledge & Smart Personal OS</p>
+      </div>
+    </div>
+
+    <div class="flex items-center flex-wrap gap-2 text-xs">
+      <!-- Gemini API Key Button -->
+      <button onclick="openApiModal()" class="flex items-center gap-1 bg-[#F5EBE6] hover:bg-pastel-peach px-2.5 py-1.5 rounded-xl font-bold border border-pastel-pink transition">
+        🔑 <span id="apiKeyBtnText">Setup Gemini AI</span>
+      </button>
+
+      <!-- Language Switcher -->
+      <button onclick="toggleLang()" class="bg-pastel-lavender hover:bg-[#d8c7ee] text-cocoa-dark px-3 py-1.5 rounded-xl font-bold border border-[#D5B8F0] transition">
+        🌐 <span id="langIndicator">ID ⇄ EN</span>
+      </button>
+
+      <!-- Cursor Picker -->
+      <div class="flex items-center bg-[#FDF7F4] border border-pastel-pink px-2 py-1 rounded-xl gap-1">
+        <button onclick="setTheme('bunny')" class="hover:bg-pastel-pink px-1.5 py-0.5 rounded-lg">🐰</button>
+        <button onclick="setTheme('boba')" class="hover:bg-pastel-pink px-1.5 py-0.5 rounded-lg">🧋</button>
+        <button onclick="setTheme('cat')" class="hover:bg-pastel-pink px-1.5 py-0.5 rounded-lg">🐾</button>
+      </div>
+
+      <!-- Gamification -->
+      <div class="bg-pastel-yellow border border-[#F3E5AB] px-3 py-1.5 rounded-xl font-bold text-amber-900">
+        ✨ <span id="xpCount">350</span> XP
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MODAL API KEY ================= -->
+  <div id="apiModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+    <div class="bg-white border border-pastel-pink rounded-3xl p-5 max-w-md w-full shadow-2xl space-y-3">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-base text-cocoa-dark">🔑 Sambungkan Gemini AI Gratis</h3>
+        <button onclick="closeApiModal()" class="text-gray-400 hover:text-gray-700 font-bold">✕</button>
+      </div>
+      <p class="text-xs text-cocoa-soft leading-relaxed">
+        Dapatkan API Key secara gratis di <a href="https://aistudio.google.com/" target="_blank" class="text-pink-600 underline font-bold">Google AI Studio</a>. API Key disimpan langsung di perangkat Anda tanpa dikirim ke server luar mana pun.
+      </p>
+      <input type="password" id="geminiApiKeyInput" placeholder="Tempel AIzaSy... disini" class="w-full text-xs p-2.5 border border-pastel-pink rounded-xl focus:outline-none focus:border-pink-400">
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeApiModal()" class="px-3 py-1.5 text-xs text-gray-500 font-semibold">Tutup</button>
+        <button onclick="saveApiKey()" class="px-4 py-1.5 text-xs bg-pastel-pink text-[#7A2B3C] font-bold rounded-xl hover:bg-[#ffd1dc]">Simpan Key</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= LAYOUT ================= -->
+  <div class="flex-1 flex flex-col md:flex-row max-w-7xl w-full mx-auto p-3 md:p-5 gap-4">
+    <!-- Sidebar Navigation -->
+    <nav class="md:w-60 flex md:flex-col gap-1.5 overflow-x-auto md:overflow-visible pb-2 md:pb-0 shrink-0">
+      <button onclick="switchTab('wawasan')" id="nav-wawasan" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition bg-pastel-pink text-[#7A3343]">
+        <span>🌸</span> <span>Wawasan Kehidupan</span>
+      </button>
+      <button onclick="switchTab('tech')" id="nav-tech" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
+        <span>💻</span> <span>Tech Dojo</span>
+      </button>
+      <button onclick="switchTab('polyglot')" id="nav-polyglot" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
+        <span>🗣️</span> <span>Kamus & Bahasa</span>
+      </button>
+      <button onclick="switchTab('ai-prompt')" id="nav-ai-prompt" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
+        <span>✨</span> <span>AI Live Generator</span>
+      </button>
+      <button onclick="switchTab('stash')" id="nav-stash" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
+        <span>📍</span> <span>Cari Barang & To-Do</span>
+      </button>
+      <button onclick="switchTab('finance')" id="nav-finance" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
+        <span>💰</span> <span>Finansial Pintar</span>
+      </button>
+      <button onclick="switchTab('reader')" id="nav-reader" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
+        <span>📖</span> <span>Cozy E-Reader</span>
+      </button>
+    </nav>
+
+    <!-- Content Panel -->
+    <main class="flex-1 bg-white border border-[#F0E6DF] rounded-3xl p-4 md:p-6 shadow-sm overflow-y-auto">
+
+      <!-- TAB 1: WAWASAN -->
+      <section id="panel-wawasan" class="space-y-5">
+        <div class="flex justify-between items-center border-b border-pastel-pink pb-2.5">
+          <h2 class="text-lg font-bold text-cocoa-dark">Ensiklopedia Tekstil & Wawasan Dunia</h2>
+          <span class="text-[11px] bg-pastel-mint text-emerald-800 px-2.5 py-0.5 rounded-full font-bold">Offline Ready</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="fabricGrid"></div>
+      </section>
+
+      <!-- TAB 2: TECH DOJO -->
+      <section id="panel-tech" class="space-y-4 hidden">
+        <div class="flex justify-between items-center border-b border-pastel-lavender pb-2.5">
+          <h2 class="text-lg font-bold text-cocoa-dark">Tech, Programming & Networking Hub</h2>
+          <div class="flex gap-1 text-xs font-bold">
+            <button onclick="filterTechLvl('beginner')" id="btn-tb" class="px-2.5 py-1 rounded-xl bg-pastel-lavender text-purple-900">Beginner</button>
+            <button onclick="filterTechLvl('intermediate')" id="btn-ti" class="px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600">Intermediate</button>
+            <button onclick="filterTechLvl('pro')" id="btn-tp" class="px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600">Pro</button>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-1.5 text-xs" id="techLangList"></div>
+        <div class="bg-[#FAF7F5] border border-pastel-pink rounded-2xl p-4" id="techContentBox"></div>
+      </section>
+
+      <!-- TAB 3: POLYGLOT -->
+      <section id="panel-polyglot" class="space-y-4 hidden">
+        <div class="flex justify-between items-center border-b border-pastel-pink pb-2.5">
+          <h2 class="text-lg font-bold text-cocoa-dark">Kamus Kata & Percakapan (Spanyol, Korea, Arab)</h2>
+          <div class="flex gap-1 text-xs font-bold">
+            <button onclick="setLangPick('es')" id="pl-es" class="px-2.5 py-1 rounded-xl bg-pastel-pink text-[#8A3347]">🇪🇸 Spanyol</button>
+            <button onclick="setLangPick('ko')" id="pl-ko" class="px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600">🇰🇷 Korea</button>
+            <button onclick="setLangPick('ar')" id="pl-ar" class="px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600">🇸🇦 Arab</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="polyglotCards"></div>
+      </section>
+
+      <!-- TAB 4: AI LIVE GENERATOR -->
+      <section id="panel-ai-prompt" class="space-y-4 hidden">
+        <div class="border-b border-pastel-mint pb-2.5">
+          <h2 class="text-lg font-bold text-cocoa-dark">✨ AI Knowledge Generator (Gemini Live)</h2>
+          <p class="text-xs text-cocoa-soft">Ketik topik apa saja yang ingin Anda pelajari. AI akan merangkumnya secara visual dwibahasa dan menyimpannya secara offline.</p>
+        </div>
+
+        <div class="flex gap-2">
+          <input type="text" id="aiTopicInput" placeholder="Contoh: Perbedaan Kain Wolfis vs Ceruty, atau Penjelasan React Server Actions..." class="flex-1 text-xs border border-pastel-mint p-2.5 rounded-xl focus:outline-none focus:border-emerald-400">
+          <button onclick="generateWithGemini()" class="bg-pastel-mint hover:bg-emerald-200 text-emerald-900 px-4 py-2.5 rounded-xl font-bold text-xs transition">
+            ✨ Generate & Simpan
+          </button>
+        </div>
+
+        <div id="aiGeneratingSpinner" class="hidden text-center py-6 text-xs text-cocoa-soft font-semibold">
+          ⏳ Sedang menyusun materi visual dengan AI... Harap tunggu sebentar.
+        </div>
+
+        <!-- Saved AI Vault -->
+        <div class="space-y-3" id="aiVaultItems"></div>
+      </section>
+
+      <!-- TAB 5: STASH & TODO -->
+      <section id="panel-stash" class="space-y-4 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Stash Finder -->
+          <div class="bg-[#FAF8F5] border border-pastel-pink p-4 rounded-2xl space-y-3">
+            <h3 class="font-bold text-sm text-cocoa-dark flex items-center gap-1">📍 Stash Finder (Di Mana Kutaruh?)</h3>
+            <div class="space-y-2 text-xs">
+              <input type="text" id="stName" placeholder="Nama barang (misal: Ijazah Asli)" class="w-full p-2 border border-gray-200 rounded-xl">
+              <input type="text" id="stLoc" placeholder="Lokasi (misal: Lemari Utama, Laci Kiri Map Kuning)" class="w-full p-2 border border-gray-200 rounded-xl">
+              <button onclick="addStash()" class="w-full bg-pastel-pink text-[#7A2B3C] font-bold py-2 rounded-xl">+ Simpan Lokasi</button>
+            </div>
+            <div class="space-y-2 max-h-52 overflow-y-auto" id="stashDisplay"></div>
+          </div>
+
+          <!-- To-Do Urutan Mendesak -->
+          <div class="bg-[#FAF8F5] border border-pastel-lavender p-4 rounded-2xl space-y-3">
+            <h3 class="font-bold text-sm text-cocoa-dark flex items-center gap-1">⏰ To-Do Prioritas Mendesak</h3>
+            <div class="space-y-2 text-xs">
+              <input type="text" id="tdText" placeholder="Tugas yang harus diselesaikan..." class="w-full p-2 border border-gray-200 rounded-xl">
+              <select id="tdPrio" class="w-full p-2 border border-gray-200 rounded-xl bg-white">
+                <option value="1">🔥 Mendesak Sekali (Segera!)</option>
+                <option value="2">📅 Prioritas Sedang</option>
+                <option value="3">☕ Santai / Rutin</option>
+              </select>
+              <button onclick="addTodo()" class="w-full bg-pastel-lavender text-purple-900 font-bold py-2 rounded-xl">+ Tambah Tugas</button>
+            </div>
+            <div class="space-y-2 max-h-52 overflow-y-auto" id="todoDisplay"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: FINANSIAL PINTAR -->
+      <section id="panel-finance" class="space-y-4 hidden">
+        <div class="bg-pastel-mint border border-[#C8E6C9] p-4 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4">
+          <div>
+            <span class="text-xs font-bold text-emerald-800">🟢 Rekomendasi "Safe-to-Spend" Bulan Ini</span>
+            <h3 class="text-2xl font-bold text-emerald-950 mt-0.5" id="safeSpendVal">Rp 1.850.000</h3>
+            <p class="text-[11px] text-emerald-800">Uang belanja aman setelah SPayLater, langganan & tabungan disisihkan.</p>
+          </div>
+          <div class="text-right bg-white/70 px-4 py-2 rounded-xl border border-emerald-200">
+            <span class="text-[11px] text-cocoa-soft font-semibold">Jatah Belanja Maksimal:</span>
+            <div class="text-lg font-bold text-emerald-900" id="dailySafeVal">Rp 92.500 <span class="text-xs font-normal">/ hari</span></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+          <div>
+            <label class="block font-semibold mb-1">Pendapatan Total (Rp)</label>
+            <input type="number" id="fnIncome" value="6500000" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Cicilan SPayLater (Rp)</label>
+            <input type="number" id="fnSpaylater" value="680000" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Tabungan Auto-Debit (Rp)</label>
+            <input type="number" id="fnAutoDebit" value="1500000" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Langganan Rutin (Rp)</label>
+            <input type="number" id="fnSubs" value="420000" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Biaya Hidup Pokok (Rp)</label>
+            <input type="number" id="fnLiving" value="2000000" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Sisa Hari Bulan Ini</label>
+            <input type="number" id="fnDays" value="20" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: E-BOOK COZY READER -->
+      <section id="panel-reader" class="space-y-4 hidden">
+        <div class="flex justify-between items-center border-b border-pastel-yellow pb-2.5">
+          <h2 class="text-lg font-bold text-cocoa-dark">Cozy E-Reader (Warm Paper Mode)</h2>
+          <label class="cursor-pointer bg-pastel-yellow text-amber-900 font-bold px-3 py-1 rounded-xl text-xs hover:bg-[#fae89d]">
+            📂 Buka File Sendiri (.txt)
+            <input type="file" id="bookFileInput" accept=".txt" class="hidden" onchange="loadLocalFile(event)">
+          </label>
+        </div>
+
+        <div class="bg-[#FCFBF7] border border-[#EADBCE] rounded-2xl p-5 shadow-inner space-y-3">
+          <h3 class="font-bold text-sm text-[#4A3B32]" id="readerTitle">Pentingnya Membangun Habit Belajar 1% Setiap Hari</h3>
+          <div class="text-xs text-[#52443B] leading-relaxed space-y-2 max-h-72 overflow-y-auto" id="readerContent">
+            <p>Perubahan besar tidak membutuhkan perombakan radikal yang melelahkan. Cukup dengan mempelajari satu kartu wawasan tekstil, menghafal 3 kosakata baru, atau membaca satu baris kode per hari, akumulasinya dalam setahun akan melipatgandakan kecerdasan dan keterampilan Anda secara eksponensial.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================= SCRIPT ================= -->
+  <script>
+    let currentLang = 'id';
+    let techLvl = 'beginner';
+    let techPick = 'htmlcss';
+    let polyPick = 'es';
+    let xp = 350;
+
+    // Local Storage Data
+    let stash = JSON.parse(localStorage.getItem('ml_stash')) || [
+      { id: 1, name: "Ijazah & Sertifikat Pelatihan", loc: "Lemari Utama, Laci Kiri Bawah Map Kuning" },
+      { id: 2, name: "Kunci Cadangan", loc: "Toples Putih Dapur" }
+    ];
+
+    let todos = JSON.parse(localStorage.getItem('ml_todos')) || [
+      { id: 1, task: "Review kode praktikum modul React", prio: 1, done: false },
+      { id: 2, task: "Cek rekonsiliasi SPayLater", prio: 1, done: false }
+    ];
+
+    let aiVault = JSON.parse(localStorage.getItem('ml_aivault')) || [];
+
+    // Static Datasets
+    const fabrics = [
+      { name: "Katun Combed 30s", icon: "👕", desc_id: "100% serat kapas murni. Paling adem, menyerap keringat optimal, standar kaos distro.", desc_en: "100% pure combed cotton. Highly breathable, superior sweat absorption." },
+      { name: "Linen Rami", icon: "🌾", desc_id: "Serat rami alami bertekstur tegas. Makin sering dicuci makin lembut dan sejuk.", desc_en: "Natural flax fiber with distinct earthy texture. Gets softer with every wash." },
+      { name: "Rayon Viscose", icon: "👗", desc_id: "Selulosa semi-sintetis. Efek jatuh (drape) sangat anggun, dingin di kulit, mudah kusut.", desc_en: "Semi-synthetic cellulose. Beautiful flowing drape, silky cool sensation." },
+      { name: "Tencel Lyocell", icon: "🌿", desc_id: "Serat kayu eucalyptus ramah lingkungan. Sehalus sutra, antibakteri alami.", desc_en: "Eco-friendly eucalyptus fiber. Silky soft and naturally antibacterial." }
+    ];
+
+    const techCatalog = {
+      htmlcss: { name: "HTML & CSS", beginner: "Tag semantik (<header>, <main>) & Flexbox.", inter: "CSS Grid 2 Dimensi & Desain Responsif.", pro: "Optimasi Web Performance & CSS Glassmorphism." },
+      sql: { name: "SQL Database", beginner: "SELECT, INSERT, UPDATE, DELETE & WHERE.", inter: "Relasi multi-tabel INNER/LEFT JOIN & GROUP BY.", pro: "Optimasi Query EXPLAIN ANALYZE & ACID Transactions." },
+      php: { name: "PHP & Laravel", beginner: "Sintaks dasar, Form POST/GET, Cookie/Session.", inter: "MVC Pattern, Routing & Blade di Laravel.", pro: "Eloquent Relationships, Queue Workers & REST API." },
+      java: { name: "Java & Spring", beginner: "Struktur Class, Objek & OOP dasar.", inter: "Java Collections, Stream API & Spring Controllers.", pro: "Spring Data JPA, JWT Security & Microservices." },
+      csharp: { name: "C# & .NET", beginner: "Sintaks C#, primitive types & logic method.", inter: "Query data LINQ & ASP.NET Core API.", pro: "Entity Framework Core & Clean Architecture." },
+      jsreact: { name: "JS & ReactJS", beginner: "ES6+, Functional Component, useState.", inter: "Custom Hooks, useEffect, State Management.", pro: "Next.js App Router, SSR, Server Actions." },
+      python: { name: "Python", beginner: "List, Dict, Functions & modular scripts.", inter: "FastAPI REST Server, Web Scraping Playwright.", pro: "Asyncio Concurrency & Model AI Integration." },
+      cpp: { name: "C++", beginner: "Pointer, Memory Reference (&), Variables.", inter: "OOP, Standard Template Library (STL Vector).", pro: "Modern C++20 Concepts, Coroutines & Qt GUI." },
+      cybersec: { name: "CyberSec & TKJ", beginner: "Model 7 Layer OSI, Subnetting IPv4 CIDR.", inter: "Wireshark Packet Analysis, VLAN Routing.", pro: "Mitigasi OWASP Top 10, TLS 1.3 Handshake." }
+    };
+
+    const polyglot = {
+      es: [
+        { word: "El libro", type: "Noun", phon: "/el 'li.βɾo/", id: "Buku", en: "Book" },
+        { word: "Aprender", type: "Verb", phon: "/a.pɾen'deɾ/", id: "Belajar", en: "To learn" },
+        { word: "El dinero", type: "Noun", phon: "/el di'ne.ɾo/", id: "Uang", en: "Money" }
+      ],
+      ko: [
+        { word: "책 (Chaek)", type: "Noun", phon: "[chaek]", id: "Buku", en: "Book" },
+        { word: "공부하다 (Gongbu)", type: "Verb", phon: "[gong-bu]", id: "Belajar", en: "To study" },
+        { word: "돈 (Don)", type: "Noun", phon: "[don]", id: "Uang", en: "Money" }
+      ],
+      ar: [
+        { word: "كِتَاب (Kitaab)", type: "Isim", phon: "[ki-taa-bun]", id: "Buku", en: "Book" },
+        { word: "تَعَلَّمَ (Ta'allama)", type: "Fi'il", phon: "[ta-'al-la-ma]", id: "Belajar", en: "To learn" },
+        { word: "مَال (Maal)", type: "Isim", phon: "[maa-lun]", id: "Uang", en: "Money" }
+      ]
+    };
+
+    function init() {
+      renderFabrics();
+      renderTech();
+      renderPoly();
+      renderStash();
+      renderTodos();
+      renderVault();
+      calcFinance();
+      updateApiKeyStatus();
+    }
+
+    function renderFabrics() {
+      document.getElementById('fabricGrid').innerHTML = fabrics.map(f => `
+        <div class="bg-pastel-pink/30 border border-pastel-pink p-3.5 rounded-2xl space-y-1">
+          <div class="text-xl">${f.icon}</div>
+          <h4 class="font-bold text-xs text-cocoa-dark">${f.name}</h4>
+          <p class="text-[11px] text-cocoa-soft">${currentLang === 'id' ? f.desc_id : f.desc_en}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderTech() {
+      const list = document.getElementById('techLangList');
+      list.innerHTML = Object.keys(techCatalog).map(k => `
+        <button onclick="pickTech('${k}')" class="px-3 py-1 rounded-xl transition ${techPick === k ? 'bg-pastel-lavender text-purple-950 font-bold border border-purple-300' : 'bg-white border border-gray-200 text-cocoa-soft'}">
+          ${techCatalog[k].name}
+        </button>
+      `).join('');
+
+      const cur = techCatalog[techPick];
+      document.getElementById('techContentBox').innerHTML = `
+        <h4 class="font-bold text-xs text-cocoa-dark">${cur.name} — Tingkat <span class="capitalize text-purple-800">${techLvl}</span></h4>
+        <p class="text-xs text-cocoa-soft mt-1.5">${cur[techLvl]}</p>
+      `;
+    }
+
+    function pickTech(k) { techPick = k; renderTech(); }
+    function filterTechLvl(lvl) {
+      techLvl = lvl;
+      ['beginner', 'intermediate', 'pro'].forEach(l => {
+        const b = document.getElementById('btn-t' + l[0]);
+        b.className = l === lvl ? "px-2.5 py-1 rounded-xl bg-pastel-lavender text-purple-900 font-bold" : "px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600 font-semibold";
+      });
+      renderTech();
+    }
+
+    function renderPoly() {
+      document.getElementById('polyglotCards').innerHTML = polyglot[polyPick].map(p => `
+        <div class="bg-white border border-pastel-pink p-3 rounded-2xl space-y-1">
+          <div class="flex justify-between items-center">
+            <h4 class="font-bold text-sm text-cocoa-dark">${p.word}</h4>
+            <span class="text-[10px] bg-pastel-yellow text-amber-900 px-2 py-0.5 rounded-full font-bold">${p.type}</span>
+          </div>
+          <div class="text-[10px] text-pink-600 font-mono">${p.phon}</div>
+          <div class="text-xs font-semibold text-cocoa-dark">Arti: ${currentLang === 'id' ? p.id : p.en}</div>
+        </div>
+      `).join('');
+    }
+
+    function setLangPick(l) {
+      polyPick = l;
+      ['es', 'ko', 'ar'].forEach(x => {
+        const b = document.getElementById('pl-' + x);
+        b.className = x === l ? "px-2.5 py-1 rounded-xl bg-pastel-pink text-[#8A3347] font-bold" : "px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600 font-semibold";
+      });
+      renderPoly();
+    }
+
+    /* ---------------- GEMINI AI LIVE INTEGRATION ---------------- */
+    function openApiModal() { document.getElementById('apiModal').classList.remove('hidden'); }
+    function closeApiModal() { document.getElementById('apiModal').classList.add('hidden'); }
+    function saveApiKey() {
+      const val = document.getElementById('geminiApiKeyInput').value.trim();
+      if (val) {
+        localStorage.setItem('mochi_gemini_key', val);
+        updateApiKeyStatus();
+        closeApiModal();
+      }
+    }
+    function updateApiKeyStatus() {
+      const key = localStorage.getItem('mochi_gemini_key');
+      const btn = document.getElementById('apiKeyBtnText');
+      if (key) {
+        btn.innerText = "Gemini AI: Terhubung ✔";
+        btn.parentElement.classList.add('bg-pastel-mint', 'text-emerald-900');
+      } else {
+        btn.innerText = "Setup Gemini AI";
+      }
+    }
+
+    async function generateWithGemini() {
+      const key = localStorage.getItem('mochi_gemini_key');
+      const topic = document.getElementById('aiTopicInput').value.trim();
+      if (!key) { alert('Silakan masukkan Gemini API Key terlebih dahulu di menu atas!'); openApiModal(); return; }
+      if (!topic) return;
+
+      const spinner = document.getElementById('aiGeneratingSpinner');
+      spinner.classList.remove('hidden');
+
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: `Buatkan materi wawasan ringkas, visual, dan ramah pemula tentang "${topic}". Formatkan jawaban murni sebagai JSON valid dengan struktur:
+                {
+                  "title_id": "Judul dalam Bahasa Indonesia",
+                  "title_en": "Title in English",
+                  "points_id": ["Poin visual 1", "Poin visual 2", "Poin visual 3"],
+                  "points_en": ["Visual point 1", "Visual point 2", "Visual point 3"]
+                }
+                Jangan berikan kata pembuka atau format markdown lain di luar blok JSON.`
+              }]
+            }]
+          })
+        });
+
+        const data = await response.json();
+        let rawText = data.candidates[0].content.parts[0].text;
+        rawText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+        const parsed = JSON.parse(rawText);
+
+        aiVault.unshift({
+          id: Date.now(),
+          topic: topic,
+          ...parsed
+        });
+        localStorage.setItem('ml_aivault', JSON.stringify(aiVault));
+        document.getElementById('aiTopicInput').value = '';
+        renderVault();
+      } catch (err) {
+        alert('Gagal mengambil data dari Gemini: ' + err.message);
+      } finally {
+        spinner.classList.add('hidden');
+      }
+    }
+
+    function renderVault() {
+      const c = document.getElementById('aiVaultItems');
+      if (aiVault.length === 0) {
+        c.innerHTML = `<div class="text-xs text-cocoa-soft text-center py-4 bg-gray-50 rounded-2xl">Belum ada materi AI tersimpan. Ketik topik di atas untuk mulai membuat materi!</div>`;
+        return;
+      }
+      c.innerHTML = aiVault.map(v => `
+        <div class="bg-white border border-pastel-mint p-4 rounded-2xl space-y-2">
+          <div class="flex justify-between items-center">
+            <h4 class="font-bold text-xs text-cocoa-dark">${currentLang === 'id' ? v.title_id : v.title_en}</h4>
+            <span class="text-[10px] bg-pastel-mint text-emerald-900 px-2 py-0.5 rounded-full font-bold">Offline Vault</span>
+          </div>
+          <ul class="text-[11px] text-cocoa-soft space-y-1 list-disc list-inside">
+            ${(currentLang === 'id' ? v.points_id : v.points_en).map(p => `<li>${p}</li>`).join('')}
+          </ul>
+        </div>
+      `).join('');
+    }
+
+    /* ---------------- STASH & TODO ---------------- */
+    function renderStash() {
+      document.getElementById('stashDisplay').innerHTML = stash.map(s => `
+        <div class="bg-white p-2 rounded-xl border border-gray-100 flex justify-between items-center text-xs">
+          <div><div class="font-bold">${s.name}</div><div class="text-[10px] text-cocoa-soft">📍 ${s.loc}</div></div>
+          <button onclick="delStash(${s.id})" class="text-red-400 font-bold px-1">✕</button>
+        </div>
+      `).join('');
+    }
+    function addStash() {
+      const n = document.getElementById('stName').value.trim();
+      const l = document.getElementById('stLoc').value.trim();
+      if (!n || !l) return;
+      stash.unshift({ id: Date.now(), name: n, loc: l });
+      localStorage.setItem('ml_stash', JSON.stringify(stash));
+      document.getElementById('stName').value = '';
+      document.getElementById('stLoc').value = '';
+      renderStash();
+    }
+    function delStash(id) {
+      stash = stash.filter(x => x.id !== id);
+      localStorage.setItem('ml_stash', JSON.stringify(stash));
+      renderStash();
+    }
+
+    function renderTodos() {
+      const sorted = [...todos].sort((a,b) => a.prio - b.prio);
+      document.getElementById('todoDisplay').innerHTML = sorted.map(t => `
+        <div class="bg-white p-2 rounded-xl border border-gray-100 flex justify-between items-center text-xs ${t.done ? 'opacity-50 line-through' : ''}">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTodo(${t.id})">
+            <div>
+              <div class="font-bold">${t.task}</div>
+              <div class="text-[10px] text-cocoa-soft">${t.prio === 1 ? '🔥 Sangat Mendesak' : '📅 Normal'}</div>
+            </div>
+          </div>
+          <button onclick="delTodo(${t.id})" class="text-red-400 font-bold px-1">✕</button>
+        </div>
+      `).join('');
+    }
+    function addTodo() {
+      const t = document.getElementById('tdText').value.trim();
+      const p = parseInt(document.getElementById('tdPrio').value);
+      if (!t) return;
+      todos.unshift({ id: Date.now(), task: t, prio: p, done: false });
+      localStorage.setItem('ml_todos', JSON.stringify(todos));
+      document.getElementById('tdText').value = '';
+      renderTodos();
+    }
+    function toggleTodo(id) {
+      const x = todos.find(i => i.id === id);
+      if (x) { x.done = !x.done; localStorage.setItem('ml_todos', JSON.stringify(todos)); renderTodos(); }
+    }
+    function delTodo(id) {
+      todos = todos.filter(x => x.id !== id);
+      localStorage.setItem('ml_todos', JSON.stringify(todos));
+      renderTodos();
+    }
+
+    /* ---------------- FINANCE SAFE-TO-SPEND ---------------- */
+    function calcFinance() {
+      const inc = parseFloat(document.getElementById('fnIncome').value) || 0;
+      const spay = parseFloat(document.getElementById('fnSpaylater').value) || 0;
+      const auto = parseFloat(document.getElementById('fnAutoDebit').value) || 0;
+      const subs = parseFloat(document.getElementById('fnSubs').value) || 0;
+      const live = parseFloat(document.getElementById('fnLiving').value) || 0;
+      const days = Math.max(1, parseFloat(document.getElementById('fnDays').value) || 1);
+
+      const safe = Math.max(0, inc - (spay + auto + subs + live));
+      const daily = Math.round(safe / days);
+
+      document.getElementById('safeSpendVal').innerText = 'Rp ' + safe.toLocaleString('id-ID');
+      document.getElementById('dailySafeVal').innerHTML = `Rp ${daily.toLocaleString('id-ID')} <span class="text-xs font-normal">/ hari</span>`;
+    }
+
+    /* ---------------- E-READER LOCAL FILE ---------------- */
+    function loadLocalFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        document.getElementById('readerTitle').innerText = file.name;
+        document.getElementById('readerContent').innerText = event.target.result;
+      };
+      reader.readAsText(file);
+    }
+
+    /* ---------------- GLOBAL CONTROLS ---------------- */
+    function switchTab(t) {
+      ['wawasan', 'tech', 'polyglot', 'ai-prompt', 'stash', 'finance', 'reader'].forEach(x => {
+        document.getElementById('panel-' + x).classList.toggle('hidden', x !== t);
+        const b = document.getElementById('nav-' + x);
+        if (x === t) {
+          b.className = "tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition bg-pastel-pink text-[#7A3343]";
+        } else {
+          b.className = "tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark";
+        }
+      });
+    }
+
+    function toggleLang() {
+      currentLang = currentLang === 'id' ? 'en' : 'id';
+      document.getElementById('langIndicator').innerText = currentLang === 'id' ? 'ID ⇄ EN' : 'EN ⇄ ID';
+      renderFabrics();
+      renderVault();
+      renderPoly();
+    }
+
+    function setTheme(t) {
+      const b = document.getElementById('appBody');
+      b.classList.remove('cursor-bunny', 'cursor-boba', 'cursor-cat');
+      b.classList.add('cursor-' + t);
+      const iconMap = { bunny: '🐰', boba: '🧋', cat: '🐾' };
+      document.getElementById('mascotIcon').innerText = iconMap[t] || '🐰';
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
