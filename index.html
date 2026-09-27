@@ -1,621 +1,1878 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#FFE5EC">
-  <title>MochiLife OS Pro - Visual Knowledge & Life OS</title>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'pastel-pink': '#FFE5EC',
-            'pastel-lavender': '#E8DFF5',
-            'pastel-mint': '#E8F5E9',
-            'pastel-yellow': '#FFF9DB',
-            'pastel-peach': '#FCE1E4',
-            'cocoa-dark': '#4A3B32',
-            'cocoa-soft': '#6E5D53',
-          }
-        }
-      }
-    }
-  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MimiPedia & Life Hub v3.0 - Pastel Smart Companion</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap');
-    * { font-family: 'Quicksand', sans-serif; }
-    
-    /* Kursor Kelinci Putih Kontras Tinggi (Double Stroke Cokelat Gelap + Bayangan) */
-    .cursor-bunny {
-      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><filter id='sh' x='-20%' y='-20%' width='150%' height='150%'><feDropShadow dx='1' dy='2' stdDeviation='1.5' flood-color='%234A3B32' flood-opacity='0.35'/></filter><g filter='url(%23sh)'><path d='M10 6 C9 1, 13 1, 13 7 L14 13 C14 13, 19 13, 20 7 C21 1, 25 1, 24 7 L23 13 C27 15, 29 19, 29 23 C29 28, 24 31, 17 31 C10 31, 5 28, 5 23 C5 19, 7 15, 11 13 Z' fill='%23FFFFFF' stroke='%2338271E' stroke-width='2.2' stroke-linejoin='round'/><path d='M11 5 C10.5 3, 12 3, 12 6 L12.5 11' fill='%23FFB7B2'/><path d='M22 5 C22.5 3, 21 3, 21 6 L20.5 11' fill='%23FFB7B2'/><circle cx='13' cy='20' r='1.6' fill='%2338271E'/><circle cx='21' cy='20' r='1.6' fill='%2338271E'/><ellipse cx='17' cy='23' rx='1.5' ry='1' fill='%23FF8E9E'/></g></svg>"), auto;
+    :root {
+      --bg-cream: #fffaf5;
+      --bg-soft-lavender: #f7f3fd;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --pastel-pink: #ffb7c5;
+      --pastel-pink-dark: #ff8ba7;
+      --pastel-mint: #bbf2db;
+      --pastel-mint-dark: #64c29c;
+      --pastel-lavender: #d8c8f8;
+      --pastel-peach: #ffd6ba;
+      --pastel-blue: #bae6fd;
+      --pastel-yellow: #fef08a;
+      --text-mocha: #433431;
+      --text-muted: #7d6b67;
+      --border-soft: rgba(255, 183, 197, 0.45);
+      --radius-sm: 14px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --shadow-kawaii: 0 10px 25px -5px rgba(230, 168, 185, 0.28), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 16px 30px -4px rgba(230, 168, 185, 0.4);
     }
-    .cursor-boba {
-      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'><g><rect x='10' y='11' width='14' height='17' rx='3' fill='%23D4A373' stroke='%234A3B32' stroke-width='2'/><circle cx='13' cy='23' r='1.4' fill='%23281810'/><circle cx='17' cy='24' r='1.4' fill='%23281810'/></g></svg>"), pointer;
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', 'Nunito', 'Segoe UI', -apple-system, sans-serif;
+      user-select: none;
     }
-    .cursor-cat {
-      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'><g><path d='M8 18 C8 12, 24 12, 24 18 C24 23, 21 27, 16 27 C11 27, 8 23, 8 18 Z' fill='%23FFFFFF' stroke='%234A3B32' stroke-width='2'/><circle cx='16' cy='13' r='2' fill='%23FFB7B2'/></g></svg>"), pointer;
+
+    body {
+      background: linear-gradient(135deg, #fff7f2 0%, #fdf2f8 50%, #f3effc 100%);
+      color: var(--text-mocha);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 80px;
+      transition: background 0.3s ease;
     }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: #E8DFF5; border-radius: 999px; }
+
+    /* THEMATIC CURSORS (High-contrast mocha outline + soft shadow for perfect visibility) */
+    body.cursor-bunny {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><defs><filter id="s" x="-20%" y="-20%" width="150%" height="150%"><feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-color="rgba(67,52,49,0.4)"/></filter></defs><g filter="url(%23s)"><path d="M12,4 C10.5,4 9,8 10,13 C8,12 5,14 5,18 C5,23 9,27 16,27 C23,27 27,23 27,18 C27,14 24,12 22,13 C23,8 21.5,4 20,4 C18.5,4 18,9 17,12 C16,9 13.5,4 12,4 Z" fill="%23FFFFFF" stroke="%23433431" stroke-width="2.2" stroke-linejoin="round"/><path d="M12,7 C11.5,7 11,9 11.5,12" stroke="%23FFB7C5" stroke-width="2" stroke-linecap="round"/><path d="M20,7 C20.5,7 21,9 20.5,12" stroke="%23FFB7C5" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18" r="1.6" fill="%23433431"/><circle cx="20" cy="18" r="1.6" fill="%23433431"/><ellipse cx="16" cy="20.5" rx="1.6" ry="1.2" fill="%23FF8BA7"/><circle cx="9" cy="20.5" r="2.2" fill="%23FFB7C5" opacity="0.8"/><circle cx="23" cy="20.5" r="2.2" fill="%23FFB7C5" opacity="0.8"/></g></svg>') 0 0, auto !important;
+    }
+
+    body.cursor-cat {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34"><defs><filter id="s" x="-20%" y="-20%" width="150%" height="150%"><feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-color="rgba(67,52,49,0.4)"/></filter></defs><g filter="url(%23s)"><path d="M7,14 C5,17 7,27 16,27 C25,27 27,17 25,14 C23,12 20,13 18,15 C16,13 13,12 11,14" fill="%23FFF6E8" stroke="%23433431" stroke-width="2.2" stroke-linejoin="round"/><circle cx="11" cy="9" r="3.2" fill="%23FF8BA7" stroke="%23433431" stroke-width="1.8"/><circle cx="17" cy="7" r="3.2" fill="%23FF8BA7" stroke="%23433431" stroke-width="1.8"/><circle cx="23" cy="9" r="3.2" fill="%23FF8BA7" stroke="%23433431" stroke-width="1.8"/><ellipse cx="16" cy="19" rx="6" ry="4.5" fill="%23FF8BA7" stroke="%23433431" stroke-width="1.8"/></g></svg>') 0 0, auto !important;
+    }
+
+    body.cursor-star {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><filter id="s"><feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-color="rgba(67,52,49,0.35)"/></filter></defs><g filter="url(%23s)"><polygon points="15,2 18,10 27,10 20,16 23,25 15,19 7,25 10,16 3,10 12,10" fill="%23FEF08A" stroke="%23433431" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="13" r="1.3" fill="%23433431"/><circle cx="18" cy="13" r="1.3" fill="%23433431"/><ellipse cx="15" cy="15" rx="1.2" ry="0.8" fill="%23FF8BA7"/></g></svg>') 2 2, auto !important;
+    }
+
+    body.cursor-boba {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34"><defs><filter id="s"><feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-color="rgba(67,52,49,0.4)"/></filter></defs><g filter="url(%23s)"><path d="M19,3 L23,12" stroke="%23FF8BA7" stroke-width="3" stroke-linecap="round"/><path d="M10,11 L24,11 L22,27 C22,29 12,29 12,27 Z" fill="%23BBF2DB" stroke="%23433431" stroke-width="2" stroke-linejoin="round"/><rect x="8" y="9" width="18" height="4" rx="2" fill="%23FFFFFF" stroke="%23433431" stroke-width="1.8"/><circle cx="14" cy="24" r="2" fill="%23433431"/><circle cx="19" cy="24" r="2" fill="%23433431"/><circle cx="16.5" cy="20" r="2" fill="%23433431"/></g></svg>') 2 2, auto !important;
+    }
+
+    body.cursor-heart {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><filter id="s"><feDropShadow dx="1" dy="2" stdDeviation="1.5" flood-color="rgba(67,52,49,0.4)"/></filter></defs><g filter="url(%23s)"><path d="M4,10 C4,5 9,4 14,8 C19,4 24,5 24,10 C24,17 14,24 14,24 C14,24 4,17 4,10 Z" fill="%23FFB7C5" stroke="%23433431" stroke-width="2.2" stroke-linejoin="round"/><circle cx="8" cy="8" r="1.5" fill="%23FFFFFF" opacity="0.8"/></g></svg>') 2 2, auto !important;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 250, 245, 0.85);
+      border-bottom: 2px solid var(--border-soft);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      background: var(--pastel-pink);
+      border: 2px solid var(--text-mocha);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      box-shadow: 2px 2px 0 var(--text-mocha);
+      transform: rotate(-4deg);
+      transition: transform 0.2s;
+    }
+
+    .brand-logo:hover {
+      transform: rotate(6deg) scale(1.08);
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-mocha);
+      letter-spacing: -0.5px;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill-btn {
+      background: white;
+      border: 1.8px solid var(--border-soft);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-mocha);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      transition: all 0.2s;
+    }
+
+    .pill-btn:hover {
+      background: var(--pastel-pink);
+      color: var(--text-mocha);
+      border-color: var(--pastel-pink-dark);
+      transform: translateY(-2px);
+    }
+
+    .pill-btn.active {
+      background: var(--pastel-pink-dark);
+      color: white;
+      border-color: var(--pastel-pink-dark);
+    }
+
+    .gamify-badge {
+      background: linear-gradient(135deg, #fff275, #ffd166);
+      border: 1.8px solid var(--text-mocha);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--text-mocha);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 2px 2px 0 var(--text-mocha);
+    }
+
+    /* MAIN CONTAINER & NAVIGATION TABS */
+    .app-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px 2px 16px 2px;
+      margin-bottom: 20px;
+      scrollbar-width: none;
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-item {
+      flex-shrink: 0;
+      background: var(--card-bg);
+      border: 2px solid rgba(255, 183, 197, 0.4);
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text-mocha);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-kawaii);
+      transition: all 0.25s ease;
+    }
+
+    .tab-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--pastel-pink-dark);
+    }
+
+    .tab-item.active {
+      background: linear-gradient(135deg, #ffc0cb 0%, #ffd1dc 100%);
+      border-color: var(--pastel-pink-dark);
+      color: var(--text-mocha);
+      box-shadow: 0 8px 18px rgba(255, 139, 167, 0.35);
+      transform: translateY(-2px);
+    }
+
+    /* VIEWS */
+    .view-panel {
+      display: none;
+      animation: fadeIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .view-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARDS & GRIDS */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .k-card {
+      background: var(--card-bg);
+      border: 2px solid white;
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-kawaii);
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .k-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: var(--pastel-pink);
+    }
+
+    .k-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      border: 1.5px solid var(--text-mocha);
+    }
+
+    .badge-pink { background: var(--pastel-pink); }
+    .badge-mint { background: var(--pastel-mint); }
+    .badge-lavender { background: var(--pastel-lavender); }
+    .badge-peach { background: var(--pastel-peach); }
+    .badge-blue { background: var(--pastel-blue); }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text-mocha);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-text {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* COMPARISON TABLE VISUAL */
+    .compare-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 8px;
+      margin-top: 10px;
+      font-size: 0.84rem;
+    }
+
+    .compare-table tr {
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 12px;
+      transition: transform 0.15s;
+    }
+
+    .compare-table tr:hover {
+      transform: scale(1.01);
+      background: white;
+    }
+
+    .compare-table td, .compare-table th {
+      padding: 10px 14px;
+      border: none;
+    }
+
+    .compare-table th {
+      color: var(--text-muted);
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .compare-table td:first-child {
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      font-weight: 700;
+    }
+
+    .compare-table td:last-child {
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+
+    /* CODE ROADMAP TABS */
+    .lang-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .lang-chip {
+      padding: 6px 14px;
+      background: white;
+      border: 1.5px solid var(--border-soft);
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-chip.active {
+      background: var(--pastel-mint);
+      border-color: var(--pastel-mint-dark);
+      color: var(--text-mocha);
+      font-weight: 800;
+      box-shadow: 2px 2px 0 var(--text-mocha);
+    }
+
+    .tier-selector {
+      display: flex;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 4px;
+      border-radius: 30px;
+      border: 1.5px solid var(--border-soft);
+      width: fit-content;
+      margin-bottom: 18px;
+    }
+
+    .tier-btn {
+      padding: 6px 16px;
+      border-radius: 24px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+
+    .tier-btn.active {
+      background: white;
+      color: var(--text-mocha);
+      font-weight: 800;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .code-box {
+      background: #2b2738;
+      color: #f1ecff;
+      padding: 16px;
+      border-radius: 16px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.84rem;
+      line-height: 1.5;
+      overflow-x: auto;
+      border: 2px solid var(--text-mocha);
+      margin: 12px 0;
+      box-shadow: 3px 3px 0 var(--text-mocha);
+    }
+
+    /* FLASHCARD & KAMUS */
+    .flashcard-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .vocab-card {
+      background: white;
+      border: 2px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+      transition: all 0.2s;
+      cursor: pointer;
+      box-shadow: var(--shadow-kawaii);
+    }
+
+    .vocab-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: var(--pastel-pink-dark);
+    }
+
+    .vocab-native {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--pastel-pink-dark);
+      margin-bottom: 4px;
+    }
+
+    .vocab-phonetic {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 8px;
+    }
+
+    .vocab-meaning {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-mocha);
+    }
+
+    /* SMART FINANCE BENTO */
+    .bento-banner {
+      background: linear-gradient(135deg, #ffd6ba 0%, #ffb7c5 100%);
+      border: 2px solid var(--text-mocha);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 4px 4px 0 var(--text-mocha);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .safe-spend-number {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--text-mocha);
+      letter-spacing: -1px;
+    }
+
+    .daily-spend-tag {
+      background: white;
+      border: 2px solid var(--text-mocha);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      box-shadow: 2px 2px 0 var(--text-mocha);
+    }
+
+    .input-group {
+      margin-bottom: 12px;
+    }
+
+    .input-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text-mocha);
+    }
+
+    .k-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      background: white;
+      font-size: 0.9rem;
+      color: var(--text-mocha);
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .k-input:focus {
+      border-color: var(--pastel-pink-dark);
+    }
+
+    .btn-action {
+      background: var(--pastel-pink);
+      color: var(--text-mocha);
+      border: 2px solid var(--text-mocha);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--text-mocha);
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-action:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--text-mocha);
+      background: var(--pastel-pink-dark);
+      color: white;
+    }
+
+    .btn-action:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0 0 0 var(--text-mocha);
+    }
+
+    /* TO-DO & ITEM FINDER */
+    .item-search-box {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .item-search-box input {
+      padding-left: 42px;
+    }
+
+    .item-search-box .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+    }
+
+    .item-row {
+      background: white;
+      border: 1.8px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+    }
+
+    .item-row:hover {
+      border-color: var(--pastel-lavender);
+      transform: translateX(4px);
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: white;
+      border-radius: var(--radius-md);
+      border: 1.8px solid var(--border-soft);
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+
+    .task-item.completed {
+      opacity: 0.55;
+      text-decoration: line-through;
+      background: #f8f9fa;
+    }
+
+    .urgency-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+    }
+    .urg-high { background: #ff6b6b; }
+    .urg-mid { background: #ffd166; }
+    .urg-low { background: #06d6a0; }
+
+    /* E-BOOK MODAL (EYE-CARE MODE) */
+    .reader-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(43, 39, 56, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .reader-modal.active {
+      display: flex;
+    }
+
+    .reader-box {
+      width: 100%;
+      max-width: 780px;
+      max-height: 85vh;
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      border: 3px solid var(--text-mocha);
+      box-shadow: 8px 8px 0 var(--text-mocha);
+      overflow-y: auto;
+      transition: background 0.3s;
+    }
+
+    .theme-cream { background: #faf4e8; color: #3e332a; }
+    .theme-lavender { background: #f2eefb; color: #342845; }
+    .theme-matcha { background: #edf5ed; color: #233c27; }
+
+    /* COMPANION MASCOT */
+    .mascot-companion {
+      position: fixed;
+      bottom: 24px;
+      right: 28px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      pointer-events: auto;
+    }
+
+    .mascot-bubble {
+      background: white;
+      border: 2px solid var(--text-mocha);
+      border-radius: 20px;
+      padding: 10px 16px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      box-shadow: 3px 3px 0 var(--text-mocha);
+      max-width: 220px;
+      position: relative;
+      animation: floatBubble 3s ease-in-out infinite;
+    }
+
+    .mascot-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      right: 24px;
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-right: 2px solid var(--text-mocha);
+      border-bottom: 2px solid var(--text-mocha);
+      transform: rotate(45deg);
+    }
+
+    .mascot-avatar {
+      width: 68px;
+      height: 68px;
+      background: white;
+      border: 2.5px solid var(--text-mocha);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--text-mocha);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .mascot-avatar:hover {
+      transform: scale(1.12) rotate(-5deg);
+    }
+
+    .mascot-avatar:active {
+      transform: scale(0.95);
+    }
+
+    @keyframes floatBubble {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .topbar { padding: 10px 16px; }
+      .app-container { padding: 0 12px; }
+      .bento-banner { flex-direction: column; align-items: flex-start; }
+      .safe-spend-number { font-size: 1.8rem; }
+    }
   </style>
 </head>
-<body class="bg-[#FFFDF9] text-cocoa-dark cursor-bunny min-h-screen flex flex-col" id="appBody">
+<body class="cursor-bunny">
 
-  <!-- ================= HEADER ================= -->
-  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-pastel-pink px-4 py-2.5 flex flex-wrap justify-between items-center gap-3">
-    <div class="flex items-center gap-2">
-      <span class="text-2xl" id="mascotIcon">🐰</span>
+  <!-- TOP APP BAR -->
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="brand-logo" id="mascotIconHeader">🐰</div>
       <div>
-        <h1 class="text-lg font-bold text-cocoa-dark flex items-center gap-1.5">
-          MochiLife <span class="text-[10px] bg-pastel-pink text-[#8A3347] px-2 py-0.5 rounded-full font-bold">READY-TO-USE</span>
-        </h1>
-        <p class="text-[11px] text-cocoa-soft">Visual Knowledge & Smart Personal OS</p>
+        <h1 class="brand-title">MimiPedia & Life Hub</h1>
+        <p class="brand-sub" id="brandTagline">Wawasan Cerdas & Sahabat Hidupmu</p>
       </div>
     </div>
 
-    <div class="flex items-center flex-wrap gap-2 text-xs">
-      <!-- Gemini API Key Button -->
-      <button onclick="openApiModal()" class="flex items-center gap-1 bg-[#F5EBE6] hover:bg-pastel-peach px-2.5 py-1.5 rounded-xl font-bold border border-pastel-pink transition">
-        🔑 <span id="apiKeyBtnText">Setup Gemini AI</span>
+    <div class="top-controls">
+      <!-- THEME CURSOR SELECTOR -->
+      <button class="pill-btn" onclick="cycleCursorTheme()" title="Ganti Tema Kursor & Maskot">
+        <span id="cursorThemeIcon">✨ Kursor: Kelinci</span>
       </button>
 
-      <!-- Language Switcher -->
-      <button onclick="toggleLang()" class="bg-pastel-lavender hover:bg-[#d8c7ee] text-cocoa-dark px-3 py-1.5 rounded-xl font-bold border border-[#D5B8F0] transition">
-        🌐 <span id="langIndicator">ID ⇄ EN</span>
+      <!-- LANGUAGE SWITCHER (ID / EN) -->
+      <button class="pill-btn" id="langToggleBtn" onclick="toggleLanguage()">
+        🌐 <span id="currentLangText">ID | B. Indonesia</span>
       </button>
 
-      <!-- Cursor Picker -->
-      <div class="flex items-center bg-[#FDF7F4] border border-pastel-pink px-2 py-1 rounded-xl gap-1">
-        <button onclick="setTheme('bunny')" class="hover:bg-pastel-pink px-1.5 py-0.5 rounded-lg">🐰</button>
-        <button onclick="setTheme('boba')" class="hover:bg-pastel-pink px-1.5 py-0.5 rounded-lg">🧋</button>
-        <button onclick="setTheme('cat')" class="hover:bg-pastel-pink px-1.5 py-0.5 rounded-lg">🐾</button>
-      </div>
-
-      <!-- Gamification -->
-      <div class="bg-pastel-yellow border border-[#F3E5AB] px-3 py-1.5 rounded-xl font-bold text-amber-900">
-        ✨ <span id="xpCount">350</span> XP
+      <!-- GAMIFICATION STREAK & XP -->
+      <div class="gamify-badge" title="Tingkat Pembelajaran Kamu">
+        ⭐ Level <span id="userLevel">3</span> • <span id="userXP">420</span> XP
       </div>
     </div>
   </header>
 
-  <!-- ================= MODAL API KEY ================= -->
-  <div id="apiModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-    <div class="bg-white border border-pastel-pink rounded-3xl p-5 max-w-md w-full shadow-2xl space-y-3">
-      <div class="flex justify-between items-center">
-        <h3 class="font-bold text-base text-cocoa-dark">🔑 Sambungkan Gemini AI Gratis</h3>
-        <button onclick="closeApiModal()" class="text-gray-400 hover:text-gray-700 font-bold">✕</button>
+  <!-- MAIN NAVIGATION TABS -->
+  <main class="app-container">
+    <nav class="nav-tabs">
+      <button class="tab-item active" onclick="switchTab('wawasan')">
+        <span>🌸</span> <span class="tab-label" data-id="Wawasan Visual" data-en="Visual Knowledge">Wawasan Visual</span>
+      </button>
+      <button class="tab-item" onclick="switchTab('coding')">
+        <span>💻</span> <span class="tab-label" data-id="Pusat Koding" data-en="Code Campus">Pusat Koding</span>
+      </button>
+      <button class="tab-item" onclick="switchTab('bahasa')">
+        <span>🗣️</span> <span class="tab-label" data-id="Kamus & Bahasa" data-en="Language Lounge">Kamus & Bahasa</span>
+      </button>
+      <button class="tab-item" onclick="switchTab('ebooks')">
+        <span>📚</span> <span class="tab-label" data-id="Perpustakaan E-Book" data-en="E-Book Reader">Perpustakaan E-Book</span>
+      </button>
+      <button class="tab-item" onclick="switchTab('finance')">
+        <span>👛</span> <span class="tab-label" data-id="Smart Finance" data-en="Smart Finance">Smart Finance</span>
+      </button>
+      <button class="tab-item" onclick="switchTab('locator')">
+        <span>🔍</span> <span class="tab-label" data-id="Taruh Mana & To-Do" data-en="Item Finder & Tasks">Taruh Mana & To-Do</span>
+      </button>
+    </nav>
+
+    <!-- ==================== VIEW 1: WAWASAN VISUAL & AI CURATION ==================== -->
+    <section id="view-wawasan" class="view-panel active">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+        <div style="display: flex; gap: 8px;">
+          <button class="pill-btn active" id="btnFeedOffline" onclick="toggleFeedMode('saved')">💾 Tersimpan Offline</button>
+          <button class="pill-btn" id="btnFeedOnline" onclick="toggleFeedMode('online')">✨ AI Discovery Feed</button>
+        </div>
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);" id="wawasanSubtext">
+          💡 Rangkuman visual ringkas anti-bosan
+        </span>
       </div>
-      <p class="text-xs text-cocoa-soft leading-relaxed">
-        Dapatkan API Key secara gratis di <a href="https://aistudio.google.com/" target="_blank" class="text-pink-600 underline font-bold">Google AI Studio</a>. API Key disimpan langsung di perangkat Anda tanpa dikirim ke server luar mana pun.
-      </p>
-      <input type="password" id="geminiApiKeyInput" placeholder="Tempel AIzaSy... disini" class="w-full text-xs p-2.5 border border-pastel-pink rounded-xl focus:outline-none focus:border-pink-400">
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closeApiModal()" class="px-3 py-1.5 text-xs text-gray-500 font-semibold">Tutup</button>
-        <button onclick="saveApiKey()" class="px-4 py-1.5 text-xs bg-pastel-pink text-[#7A2B3C] font-bold rounded-xl hover:bg-[#ffd1dc]">Simpan Key</button>
+
+      <!-- KNOWLEDGE GRID -->
+      <div class="grid-2" id="wawasanGrid">
+        <!-- Card 1: Tekstil & Pakaian (Visual Comparison) -->
+        <article class="k-card">
+          <span class="k-badge badge-pink">Fashion & Tekstil</span>
+          <h2 class="card-title">👗 Peta Bahan Pakaian: Rayon vs Linen vs Tencel</h2>
+          <p class="card-text" id="descKain">
+            Sering bingung nama bahan kain saat beli pakaian? Ini panduan rasa di kulit dan perawatannya:
+          </p>
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Bahan</th>
+                <th>Karakteristik & Sensasi</th>
+                <th>Kelebihan / Minus</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Katun Rayon</td>
+                <td>Sangat adem, jatuh lemas di badan</td>
+                <td>✅ Nyaman | ❌ Mudah kusut jika dicuci kasar</td>
+              </tr>
+              <tr>
+                <td>Linen Rami</td>
+                <td>Serat alami berpori, bertekstur tegas</td>
+                <td>✅ Mewah & sejuk | ❌ Kaku di awal cuci</td>
+              </tr>
+              <tr>
+                <td>Tencel (Lyocell)</td>
+                <td>Serat pulp kayu ramah lingkungan, selembut sutra</td>
+                <td>✅ Hipoalergenik & licin | ❌ Harga lebih premium</td>
+              </tr>
+              <tr>
+                <td>Polyester</td>
+                <td>Serat sintetis kuat tahan lama</td>
+                <td>✅ Anti-kusut cepat kering | ❌ Kurang serap keringat</td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn-action" style="margin-top: 14px;" onclick="addRewardXP(15, 'Mempelajari Peta Tekstil!')">
+            ❤️ Tandai Paham (+15 XP)
+          </button>
+        </article>
+
+        <!-- Card 2: Sejarah Dunia / Atlas Ringkas -->
+        <article class="k-card">
+          <span class="k-badge badge-lavender">Sejarah & Atlas</span>
+          <h2 class="card-title">🌍 1453: Runtuhnya Konstantinopel & Era Rempah</h2>
+          <p class="card-text" id="descSejarah">
+            Kenapa bangsa Eropa berlayar jauh sampai ke Maluku Nusantara? Kuncinya ada pada satu peristiwa ini:
+          </p>
+          <div style="background: white; padding: 14px; border-radius: 16px; border: 1.5px solid var(--border-soft); line-height: 1.5; font-size: 0.85rem;">
+            <p><strong>1. Blokade Jalur Sutra Darat:</strong> Sultan Mehmed II merebut Konstantinopel, memutus monopoli dagang bangsa Eropa ke Asia.</p>
+            <p style="margin-top: 8px;"><strong>2. Lonjakan Harga Lada & Cengkih:</strong> Rempah berharga setara emas untuk pengawet daging di musim dingin barat.</p>
+            <p style="margin-top: 8px;"><strong>3. Era Samudra Dimulai:</strong> Lahirlah ekspedisi maritim Spanyol & Portugis yang mengubah peta navigasi dunia modern.</p>
+          </div>
+          <button class="btn-action" style="margin-top: 14px;" onclick="addRewardXP(15, 'Mempelajari Sejarah 1453!')">
+            ❤️ Tandai Paham (+15 XP)
+          </button>
+        </article>
+
+        <!-- Card 3: Sains Populer -->
+        <article class="k-card">
+          <span class="k-badge badge-mint">Sains & Tubuh Manusia</span>
+          <h2 class="card-title">🌙 Ritme Sirkadian: Mengapa Layar HP Bikin Insomnia?</h2>
+          <p class="card-text">
+            Mata manusia memiliki sensor sel ganglion yang sensitif terhadap spektrum <em>blue light</em> (460nm).
+          </p>
+          <div style="background: #eefbf5; padding: 14px; border-radius: 14px; font-size: 0.84rem; line-height: 1.5;">
+            ✨ <strong>Fakta AI:</strong> Paparan layar 30 menit sebelum tidur menekan hormon <strong>Melatonin</strong> hingga 50%, menipu otak bahwa matahari belum terbenam.
+          </div>
+          <button class="btn-action" style="margin-top: 14px;" onclick="addRewardXP(15, 'Memahami Siklus Sirkadian!')">
+            ❤️ Tandai Paham (+15 XP)
+          </button>
+        </article>
+
+        <!-- Card 4: Ekonomi Sederhana -->
+        <article class="k-card">
+          <span class="k-badge badge-peach">Ekonomi Sehari-hari</span>
+          <h2 class="card-title">🥐 Analogi Roti & Inflasi: Mengapa Uang Menyusut?</h2>
+          <p class="card-text">
+            Inflasi bukan berarti uang fisik hilang, melainkan daya beli yang melemah. Jika seporsi sarapan tahun 2015 seharga Rp10.000, hari ini Rp25.000.
+          </p>
+          <div style="background: #fff8f0; padding: 14px; border-radius: 14px; font-size: 0.84rem; line-height: 1.5;">
+            📈 <strong>Solusi:</strong> Menyimpan uang 100% di kas membuat nilai riil berkurang. Alokasikan sebagian ke instrumen pembawa imbal hasil seperti reksadana atau emas.
+          </div>
+          <button class="btn-action" style="margin-top: 14px;" onclick="addRewardXP(15, 'Mempelajari Konsep Inflasi!')">
+            ❤️ Tandai Paham (+15 XP)
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: PUSAT KODING (JS, PY, C++, C#, PHP, JAVA, SQL, HTML/CSS, REACT) ==================== -->
+    <section id="view-coding" class="view-panel">
+      <!-- LANGUAGE CHIP SELECTOR -->
+      <div class="lang-chips">
+        <button class="lang-chip active" onclick="setCodingLang('react')">ReactJS</button>
+        <button class="lang-chip" onclick="setCodingLang('javascript')">JavaScript</button>
+        <button class="lang-chip" onclick="setCodingLang('python')">Python</button>
+        <button class="lang-chip" onclick="setCodingLang('csharp')">C# (.NET)</button>
+        <button class="lang-chip" onclick="setCodingLang('php')">PHP</button>
+        <button class="lang-chip" onclick="setCodingLang('java')">Java</button>
+        <button class="lang-chip" onclick="setCodingLang('cpp')">C++</button>
+        <button class="lang-chip" onclick="setCodingLang('sql')">SQL</button>
+        <button class="lang-chip" onclick="setCodingLang('htmlcss')">HTML & CSS</button>
+      </div>
+
+      <!-- 3-TIER ROADMAP SELECTOR -->
+      <div class="tier-selector">
+        <button class="tier-btn active" id="btnTierBeginner" onclick="setCodingTier('beginner')">🌱 1. Beginner</button>
+        <button class="tier-btn" id="btnTierIntermediate" onclick="setCodingTier('intermediate')">🌿 2. Intermediate</button>
+        <button class="tier-btn" id="btnTierPro" onclick="setCodingTier('pro')">🌳 3. Pro / Expert</button>
+      </div>
+
+      <!-- ROADMAP DISPLAY CONTAINER -->
+      <div class="k-card" id="codingContentBox">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: KAMUS PER-KATA & PERCAKAPAN (ES, KO, AR) ==================== -->
+    <section id="view-bahasa" class="view-panel">
+      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <button class="pill-btn active" id="btnLangES" onclick="setTargetLang('es')">🇪🇸 Spanyol (Español)</button>
+        <button class="pill-btn" id="btnLangKO" onclick="setTargetLang('ko')">🇰🇷 Korea (한국어)</button>
+        <button class="pill-btn" id="btnLangAR" onclick="setTargetLang('ar')">🇸🇦 Arab (العربية)</button>
+      </div>
+
+      <h3 style="margin-bottom: 12px; font-weight: 800;" id="vocabHeaderTitle">📖 Kamus Kosakata Per-Kata (Word Flashcards)</h3>
+      <div class="flashcard-wrap" id="vocabGrid">
+        <!-- Flashcards rendered dynamically -->
+      </div>
+
+      <h3 style="margin: 28px 0 12px 0; font-weight: 800;">💬 Percakapan Situasi Nyata & Breakdown Kalimat</h3>
+      <div class="k-card" id="conversationBox">
+        <!-- Conversation rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: PERPUSTAKAAN E-BOOK (EYE-CARE MODE) ==================== -->
+    <section id="view-ebooks" class="view-panel">
+      <div class="grid-3">
+        <!-- Book 1 -->
+        <div class="k-card">
+          <span class="k-badge badge-mint">Hard & Soft Skills</span>
+          <h3 class="card-title">Atomic Habits Ringkas</h3>
+          <p class="card-text">Prinsip 1% perbaikan harian, pembentukan cue-craving-response-reward, dan cara membangun identitas baru.</p>
+          <button class="btn-action" onclick="openEBook('atomic')">📖 Buka Mode Baca</button>
+        </div>
+
+        <!-- Book 2 -->
+        <div class="k-card">
+          <span class="k-badge badge-lavender">Sains & Kosmologi</span>
+          <h3 class="card-title">Astrophysics for People in a Hurry</h3>
+          <p class="card-text">Memahami Big Bang, materi gelap (Dark Matter), dan kuantum tanpa rumus matematika rumit.</p>
+          <button class="btn-action" onclick="openEBook('astrophysics')">📖 Buka Mode Baca</button>
+        </div>
+
+        <!-- Book 3 -->
+        <div class="k-card">
+          <span class="k-badge badge-peach">Sosial & Psikologi</span>
+          <h3 class="card-title">Seni Berbicara Kepada Siapa Saja</h3>
+          <p class="card-text">Teknik mendengarkan aktif, membaca bahasa tubuh micro-expression, dan membangun kedekatan instan.</p>
+          <button class="btn-action" onclick="openEBook('social')">📖 Buka Mode Baca</button>
+        </div>
+
+        <!-- Book 4 -->
+        <div class="k-card">
+          <span class="k-badge badge-pink">Pengembangan Diri</span>
+          <h3 class="card-title">Filosofi Teras (Stoisisme)</h3>
+          <p class="card-text">Menguasai dikotomi kendali: fokus pada apa yang bisa kamu kontrol, abaikan yang di luar kuasa dirimu.</p>
+          <button class="btn-action" onclick="openEBook('stoisisme')">📖 Buka Mode Baca</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 5: SMART FINANCE BENTO ==================== -->
+    <section id="view-finance" class="view-panel">
+      <!-- HERO BENTO BANNER -->
+      <div class="bento-banner">
+        <div>
+          <span style="font-weight: 800; font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.5px;">
+            ✨ Rekomendasi Sisa Uang Aman Belanja (Safe to Spend)
+          </span>
+          <div class="safe-spend-number" id="valSafeSpend">Rp 0</div>
+          <p style="font-size: 0.85rem; font-weight: 600; opacity: 0.9;" id="txtHealthRatio">
+            Rasio Beban Cicilan SPayLater: 0% (Sehat Aman 🟢)
+          </p>
+        </div>
+        <div class="daily-spend-tag">
+          ☕ Kuota Jajan Maksimal: <span id="valDailySpend" style="color: #ff3366;">Rp 0</span> / hari
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- FINANCE INPUT CALCULATOR -->
+        <div class="k-card">
+          <h3 class="card-title">🧮 Simulator Anggaran & Pengeluaran Wajib</h3>
+          <div class="input-group">
+            <label class="input-label">Pemasukan Bulanan (Gaji / Freelance)</label>
+            <input type="number" id="inIncome" class="k-input" value="6500000" oninput="calculateFinance()" />
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Cicilan SPayLater & PayLater Lainnya</label>
+            <input type="number" id="inSPayLater" class="k-input" value="650000" oninput="calculateFinance()" />
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Tabungan Auto-Debit Bulanan</label>
+            <input type="number" id="inAutoDebit" class="k-input" value="1000000" oninput="calculateFinance()" />
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Langganan Rutin (Netflix, Spotify, Cloud, dll)</label>
+            <input type="number" id="inSubs" class="k-input" value="220000" oninput="calculateFinance()" />
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Kebutuhan Pokok Wajib (Makan Pokok, Kost/Listrik)</label>
+            <input type="number" id="inNeeds" class="k-input" value="2500000" oninput="calculateFinance()" />
+          </div>
+        </div>
+
+        <!-- MULTI-VAULT WALLET MONITOR -->
+        <div class="k-card">
+          <h3 class="card-title">🏦 Pantauan Total Uang (Multi-Vault Balance)</h3>
+          <div style="background: white; padding: 14px; border-radius: 16px; border: 1.8px solid var(--border-soft); margin-bottom: 12px;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">TOTAL KEKAYAAN BERSIH</div>
+            <div style="font-size: 1.8rem; font-weight: 900; color: var(--pastel-mint-dark);" id="valNetWorth">Rp 14.850.000</div>
+          </div>
+
+          <div class="item-row">
+            <div><strong>💵 Uang Tunai (Cash di Dompet)</strong></div>
+            <input type="number" id="vaultCash" class="k-input" style="width: 130px; text-align: right;" value="450000" oninput="updateNetWorth()" />
+          </div>
+
+          <div class="item-row">
+            <div><strong>📱 Dompet Digital (GoPay, OVO, ShopeePay)</strong></div>
+            <input type="number" id="vaultEWallet" class="k-input" style="width: 130px; text-align: right;" value="1400000" oninput="updateNetWorth()" />
+          </div>
+
+          <div class="item-row">
+            <div><strong>🏛️ Rekening Bank (BCA, Mandiri, BSI, dll)</strong></div>
+            <input type="number" id="vaultBank" class="k-input" style="width: 130px; text-align: right;" value="13000000" oninput="updateNetWorth()" />
+          </div>
+
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 8px;">
+            🔒 Semua data disimpan privat di memori lokal laptop Anda tanpa kirim ke server eksternal.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 6: ASISTEN BARANG & TO-DO PRIORITAS ==================== -->
+    <section id="view-locator" class="view-panel">
+      <div class="grid-2">
+        <!-- ITEM LOCATOR ('TARUH DI MANA?') -->
+        <div class="k-card">
+          <h3 class="card-title">🔍 Asisten: 'Taruh di Mana ya?'</h3>
+          <p class="card-text">Cari cepat lokasi berkas penting atau barang fisik di rumah/kamar Anda:</p>
+          
+          <div class="item-search-box">
+            <span class="search-icon">🔎</span>
+            <input type="text" id="itemSearchInput" class="k-input" placeholder="Ketik nama berkas/barang (misal: Ijazah, Paspor)..." oninput="filterItems()" />
+          </div>
+
+          <div id="itemListContainer" style="max-height: 280px; overflow-y: auto;">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Add Item Form -->
+          <div style="margin-top: 14px; background: rgba(255,255,255,0.7); padding: 12px; border-radius: var(--radius-sm); border: 1.5px dashed var(--border-soft);">
+            <div style="font-size: 0.82rem; font-weight: 800; margin-bottom: 6px;">➕ Catat Lokasi Barang Baru</div>
+            <input type="text" id="newDocName" class="k-input" placeholder="Nama barang (misal: BPKB Motor)" style="margin-bottom: 6px;" />
+            <input type="text" id="newDocLocation" class="k-input" placeholder="Lokasi simpan (misal: Lemari kamar rak 2 map hijau)" style="margin-bottom: 8px;" />
+            <button class="btn-action" onclick="addNewLocationItem()">Simpan Lokasi</button>
+          </div>
+        </div>
+
+        <!-- PRIORITIZED TO-DO WITH CALENDAR DEADLINES -->
+        <div class="k-card">
+          <h3 class="card-title">⏰ To-Do Prioritas & Pengingat Tugas</h3>
+          <p class="card-text">Diurutkan otomatis dari yang paling mendesak untuk dikerjakan secepatnya:</p>
+
+          <div id="taskListContainer" style="max-height: 280px; overflow-y: auto;">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Add Task Form -->
+          <div style="margin-top: 14px; background: rgba(255,255,255,0.7); padding: 12px; border-radius: var(--radius-sm); border: 1.5px dashed var(--border-soft);">
+            <div style="font-size: 0.82rem; font-weight: 800; margin-bottom: 6px;">➕ Tambah Tugas / Kerjaan Baru</div>
+            <input type="text" id="newTaskTitle" class="k-input" placeholder="Nama tugas..." style="margin-bottom: 6px;" />
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+              <select id="newTaskUrgency" class="k-input" style="flex: 1;">
+                <option value="high">🔴 Sangat Mendesak (High)</option>
+                <option value="mid">🟡 Sedang (Normal)</option>
+                <option value="low">🟢 Santai (Low)</option>
+              </select>
+              <input type="date" id="newTaskDate" class="k-input" style="flex: 1;" />
+            </div>
+            <button class="btn-action" onclick="addNewTask()">Tambah & Pasang Pengingat (+10 XP)</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== E-BOOK READER MODAL ==================== -->
+  <div class="reader-modal" id="ebookModal" onclick="closeEBookModal(event)">
+    <div class="reader-box theme-cream" id="ebookReaderBox" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid rgba(0,0,0,0.1); padding-bottom: 12px; margin-bottom: 16px;">
+        <div>
+          <h2 id="ebookModalTitle" style="font-size: 1.3rem; font-weight: 800;">Atomic Habits Ringkas</h2>
+          <span style="font-size: 0.78rem; font-weight: 700; opacity: 0.7;">Mode Baca Nyaman di Mata (Eye-Care)</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="pill-btn" onclick="setReaderTheme('cream')">🍦 Krim</button>
+          <button class="pill-btn" onclick="setReaderTheme('lavender')">💜 Lavender</button>
+          <button class="pill-btn" onclick="setReaderTheme('matcha')">🍵 Matcha</button>
+          <button class="pill-btn" onclick="closeEBook()">✕ Tutup</button>
+        </div>
+      </div>
+      <div id="ebookModalBody" style="line-height: 1.8; font-size: 0.96rem;">
+        <!-- Loaded via JS -->
       </div>
     </div>
   </div>
 
-  <!-- ================= LAYOUT ================= -->
-  <div class="flex-1 flex flex-col md:flex-row max-w-7xl w-full mx-auto p-3 md:p-5 gap-4">
-    <!-- Sidebar Navigation -->
-    <nav class="md:w-60 flex md:flex-col gap-1.5 overflow-x-auto md:overflow-visible pb-2 md:pb-0 shrink-0">
-      <button onclick="switchTab('wawasan')" id="nav-wawasan" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition bg-pastel-pink text-[#7A3343]">
-        <span>🌸</span> <span>Wawasan Kehidupan</span>
-      </button>
-      <button onclick="switchTab('tech')" id="nav-tech" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
-        <span>💻</span> <span>Tech Dojo</span>
-      </button>
-      <button onclick="switchTab('polyglot')" id="nav-polyglot" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
-        <span>🗣️</span> <span>Kamus & Bahasa</span>
-      </button>
-      <button onclick="switchTab('ai-prompt')" id="nav-ai-prompt" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
-        <span>✨</span> <span>AI Live Generator</span>
-      </button>
-      <button onclick="switchTab('stash')" id="nav-stash" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
-        <span>📍</span> <span>Cari Barang & To-Do</span>
-      </button>
-      <button onclick="switchTab('finance')" id="nav-finance" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
-        <span>💰</span> <span>Finansial Pintar</span>
-      </button>
-      <button onclick="switchTab('reader')" id="nav-reader" class="tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark">
-        <span>📖</span> <span>Cozy E-Reader</span>
-      </button>
-    </nav>
+  <!-- ==================== INTERACTIVE MASCOT COMPANION ==================== -->
+  <aside class="mascot-companion">
+    <div class="mascot-bubble" id="mascotSpeech">
+      Semangat belajarnya hari ini! Klik aku kalau mau disemangati ya~ ✨
+    </div>
+    <div class="mascot-avatar" id="mascotAvatar" onclick="petMascot()">
+      <span id="mascotEmoji" style="font-size: 34px;">🐰</span>
+    </div>
+  </aside>
 
-    <!-- Content Panel -->
-    <main class="flex-1 bg-white border border-[#F0E6DF] rounded-3xl p-4 md:p-6 shadow-sm overflow-y-auto">
-
-      <!-- TAB 1: WAWASAN -->
-      <section id="panel-wawasan" class="space-y-5">
-        <div class="flex justify-between items-center border-b border-pastel-pink pb-2.5">
-          <h2 class="text-lg font-bold text-cocoa-dark">Ensiklopedia Tekstil & Wawasan Dunia</h2>
-          <span class="text-[11px] bg-pastel-mint text-emerald-800 px-2.5 py-0.5 rounded-full font-bold">Offline Ready</span>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="fabricGrid"></div>
-      </section>
-
-      <!-- TAB 2: TECH DOJO -->
-      <section id="panel-tech" class="space-y-4 hidden">
-        <div class="flex justify-between items-center border-b border-pastel-lavender pb-2.5">
-          <h2 class="text-lg font-bold text-cocoa-dark">Tech, Programming & Networking Hub</h2>
-          <div class="flex gap-1 text-xs font-bold">
-            <button onclick="filterTechLvl('beginner')" id="btn-tb" class="px-2.5 py-1 rounded-xl bg-pastel-lavender text-purple-900">Beginner</button>
-            <button onclick="filterTechLvl('intermediate')" id="btn-ti" class="px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600">Intermediate</button>
-            <button onclick="filterTechLvl('pro')" id="btn-tp" class="px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600">Pro</button>
-          </div>
-        </div>
-        <div class="flex flex-wrap gap-1.5 text-xs" id="techLangList"></div>
-        <div class="bg-[#FAF7F5] border border-pastel-pink rounded-2xl p-4" id="techContentBox"></div>
-      </section>
-
-      <!-- TAB 3: POLYGLOT -->
-      <section id="panel-polyglot" class="space-y-4 hidden">
-        <div class="flex justify-between items-center border-b border-pastel-pink pb-2.5">
-          <h2 class="text-lg font-bold text-cocoa-dark">Kamus Kata & Percakapan (Spanyol, Korea, Arab)</h2>
-          <div class="flex gap-1 text-xs font-bold">
-            <button onclick="setLangPick('es')" id="pl-es" class="px-2.5 py-1 rounded-xl bg-pastel-pink text-[#8A3347]">🇪🇸 Spanyol</button>
-            <button onclick="setLangPick('ko')" id="pl-ko" class="px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600">🇰🇷 Korea</button>
-            <button onclick="setLangPick('ar')" id="pl-ar" class="px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600">🇸🇦 Arab</button>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="polyglotCards"></div>
-      </section>
-
-      <!-- TAB 4: AI LIVE GENERATOR -->
-      <section id="panel-ai-prompt" class="space-y-4 hidden">
-        <div class="border-b border-pastel-mint pb-2.5">
-          <h2 class="text-lg font-bold text-cocoa-dark">✨ AI Knowledge Generator (Gemini Live)</h2>
-          <p class="text-xs text-cocoa-soft">Ketik topik apa saja yang ingin Anda pelajari. AI akan merangkumnya secara visual dwibahasa dan menyimpannya secara offline.</p>
-        </div>
-
-        <div class="flex gap-2">
-          <input type="text" id="aiTopicInput" placeholder="Contoh: Perbedaan Kain Wolfis vs Ceruty, atau Penjelasan React Server Actions..." class="flex-1 text-xs border border-pastel-mint p-2.5 rounded-xl focus:outline-none focus:border-emerald-400">
-          <button onclick="generateWithGemini()" class="bg-pastel-mint hover:bg-emerald-200 text-emerald-900 px-4 py-2.5 rounded-xl font-bold text-xs transition">
-            ✨ Generate & Simpan
-          </button>
-        </div>
-
-        <div id="aiGeneratingSpinner" class="hidden text-center py-6 text-xs text-cocoa-soft font-semibold">
-          ⏳ Sedang menyusun materi visual dengan AI... Harap tunggu sebentar.
-        </div>
-
-        <!-- Saved AI Vault -->
-        <div class="space-y-3" id="aiVaultItems"></div>
-      </section>
-
-      <!-- TAB 5: STASH & TODO -->
-      <section id="panel-stash" class="space-y-4 hidden">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Stash Finder -->
-          <div class="bg-[#FAF8F5] border border-pastel-pink p-4 rounded-2xl space-y-3">
-            <h3 class="font-bold text-sm text-cocoa-dark flex items-center gap-1">📍 Stash Finder (Di Mana Kutaruh?)</h3>
-            <div class="space-y-2 text-xs">
-              <input type="text" id="stName" placeholder="Nama barang (misal: Ijazah Asli)" class="w-full p-2 border border-gray-200 rounded-xl">
-              <input type="text" id="stLoc" placeholder="Lokasi (misal: Lemari Utama, Laci Kiri Map Kuning)" class="w-full p-2 border border-gray-200 rounded-xl">
-              <button onclick="addStash()" class="w-full bg-pastel-pink text-[#7A2B3C] font-bold py-2 rounded-xl">+ Simpan Lokasi</button>
-            </div>
-            <div class="space-y-2 max-h-52 overflow-y-auto" id="stashDisplay"></div>
-          </div>
-
-          <!-- To-Do Urutan Mendesak -->
-          <div class="bg-[#FAF8F5] border border-pastel-lavender p-4 rounded-2xl space-y-3">
-            <h3 class="font-bold text-sm text-cocoa-dark flex items-center gap-1">⏰ To-Do Prioritas Mendesak</h3>
-            <div class="space-y-2 text-xs">
-              <input type="text" id="tdText" placeholder="Tugas yang harus diselesaikan..." class="w-full p-2 border border-gray-200 rounded-xl">
-              <select id="tdPrio" class="w-full p-2 border border-gray-200 rounded-xl bg-white">
-                <option value="1">🔥 Mendesak Sekali (Segera!)</option>
-                <option value="2">📅 Prioritas Sedang</option>
-                <option value="3">☕ Santai / Rutin</option>
-              </select>
-              <button onclick="addTodo()" class="w-full bg-pastel-lavender text-purple-900 font-bold py-2 rounded-xl">+ Tambah Tugas</button>
-            </div>
-            <div class="space-y-2 max-h-52 overflow-y-auto" id="todoDisplay"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 6: FINANSIAL PINTAR -->
-      <section id="panel-finance" class="space-y-4 hidden">
-        <div class="bg-pastel-mint border border-[#C8E6C9] p-4 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4">
-          <div>
-            <span class="text-xs font-bold text-emerald-800">🟢 Rekomendasi "Safe-to-Spend" Bulan Ini</span>
-            <h3 class="text-2xl font-bold text-emerald-950 mt-0.5" id="safeSpendVal">Rp 1.850.000</h3>
-            <p class="text-[11px] text-emerald-800">Uang belanja aman setelah SPayLater, langganan & tabungan disisihkan.</p>
-          </div>
-          <div class="text-right bg-white/70 px-4 py-2 rounded-xl border border-emerald-200">
-            <span class="text-[11px] text-cocoa-soft font-semibold">Jatah Belanja Maksimal:</span>
-            <div class="text-lg font-bold text-emerald-900" id="dailySafeVal">Rp 92.500 <span class="text-xs font-normal">/ hari</span></div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-          <div>
-            <label class="block font-semibold mb-1">Pendapatan Total (Rp)</label>
-            <input type="number" id="fnIncome" value="6500000" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Cicilan SPayLater (Rp)</label>
-            <input type="number" id="fnSpaylater" value="680000" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Tabungan Auto-Debit (Rp)</label>
-            <input type="number" id="fnAutoDebit" value="1500000" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Langganan Rutin (Rp)</label>
-            <input type="number" id="fnSubs" value="420000" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Biaya Hidup Pokok (Rp)</label>
-            <input type="number" id="fnLiving" value="2000000" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Sisa Hari Bulan Ini</label>
-            <input type="number" id="fnDays" value="20" oninput="calcFinance()" class="w-full p-2 border border-gray-200 rounded-xl">
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 7: E-BOOK COZY READER -->
-      <section id="panel-reader" class="space-y-4 hidden">
-        <div class="flex justify-between items-center border-b border-pastel-yellow pb-2.5">
-          <h2 class="text-lg font-bold text-cocoa-dark">Cozy E-Reader (Warm Paper Mode)</h2>
-          <label class="cursor-pointer bg-pastel-yellow text-amber-900 font-bold px-3 py-1 rounded-xl text-xs hover:bg-[#fae89d]">
-            📂 Buka File Sendiri (.txt)
-            <input type="file" id="bookFileInput" accept=".txt" class="hidden" onchange="loadLocalFile(event)">
-          </label>
-        </div>
-
-        <div class="bg-[#FCFBF7] border border-[#EADBCE] rounded-2xl p-5 shadow-inner space-y-3">
-          <h3 class="font-bold text-sm text-[#4A3B32]" id="readerTitle">Pentingnya Membangun Habit Belajar 1% Setiap Hari</h3>
-          <div class="text-xs text-[#52443B] leading-relaxed space-y-2 max-h-72 overflow-y-auto" id="readerContent">
-            <p>Perubahan besar tidak membutuhkan perombakan radikal yang melelahkan. Cukup dengan mempelajari satu kartu wawasan tekstil, menghafal 3 kosakata baru, atau membaca satu baris kode per hari, akumulasinya dalam setahun akan melipatgandakan kecerdasan dan keterampilan Anda secara eksponensial.</p>
-          </div>
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-  <!-- ================= SCRIPT ================= -->
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
-    let currentLang = 'id';
-    let techLvl = 'beginner';
-    let techPick = 'htmlcss';
-    let polyPick = 'es';
-    let xp = 350;
+    /* ----------------------------------------------------
+       APP STATE & LOCAL STORAGE PERSISTENCE
+    ---------------------------------------------------- */
+    const STORAGE_KEY = 'MIMIPEDIA_LIFEHUB_V3';
 
-    // Local Storage Data
-    let stash = JSON.parse(localStorage.getItem('ml_stash')) || [
-      { id: 1, name: "Ijazah & Sertifikat Pelatihan", loc: "Lemari Utama, Laci Kiri Bawah Map Kuning" },
-      { id: 2, name: "Kunci Cadangan", loc: "Toples Putih Dapur" }
-    ];
-
-    let todos = JSON.parse(localStorage.getItem('ml_todos')) || [
-      { id: 1, task: "Review kode praktikum modul React", prio: 1, done: false },
-      { id: 2, task: "Cek rekonsiliasi SPayLater", prio: 1, done: false }
-    ];
-
-    let aiVault = JSON.parse(localStorage.getItem('ml_aivault')) || [];
-
-    // Static Datasets
-    const fabrics = [
-      { name: "Katun Combed 30s", icon: "👕", desc_id: "100% serat kapas murni. Paling adem, menyerap keringat optimal, standar kaos distro.", desc_en: "100% pure combed cotton. Highly breathable, superior sweat absorption." },
-      { name: "Linen Rami", icon: "🌾", desc_id: "Serat rami alami bertekstur tegas. Makin sering dicuci makin lembut dan sejuk.", desc_en: "Natural flax fiber with distinct earthy texture. Gets softer with every wash." },
-      { name: "Rayon Viscose", icon: "👗", desc_id: "Selulosa semi-sintetis. Efek jatuh (drape) sangat anggun, dingin di kulit, mudah kusut.", desc_en: "Semi-synthetic cellulose. Beautiful flowing drape, silky cool sensation." },
-      { name: "Tencel Lyocell", icon: "🌿", desc_id: "Serat kayu eucalyptus ramah lingkungan. Sehalus sutra, antibakteri alami.", desc_en: "Eco-friendly eucalyptus fiber. Silky soft and naturally antibacterial." }
-    ];
-
-    const techCatalog = {
-      htmlcss: { name: "HTML & CSS", beginner: "Tag semantik (<header>, <main>) & Flexbox.", inter: "CSS Grid 2 Dimensi & Desain Responsif.", pro: "Optimasi Web Performance & CSS Glassmorphism." },
-      sql: { name: "SQL Database", beginner: "SELECT, INSERT, UPDATE, DELETE & WHERE.", inter: "Relasi multi-tabel INNER/LEFT JOIN & GROUP BY.", pro: "Optimasi Query EXPLAIN ANALYZE & ACID Transactions." },
-      php: { name: "PHP & Laravel", beginner: "Sintaks dasar, Form POST/GET, Cookie/Session.", inter: "MVC Pattern, Routing & Blade di Laravel.", pro: "Eloquent Relationships, Queue Workers & REST API." },
-      java: { name: "Java & Spring", beginner: "Struktur Class, Objek & OOP dasar.", inter: "Java Collections, Stream API & Spring Controllers.", pro: "Spring Data JPA, JWT Security & Microservices." },
-      csharp: { name: "C# & .NET", beginner: "Sintaks C#, primitive types & logic method.", inter: "Query data LINQ & ASP.NET Core API.", pro: "Entity Framework Core & Clean Architecture." },
-      jsreact: { name: "JS & ReactJS", beginner: "ES6+, Functional Component, useState.", inter: "Custom Hooks, useEffect, State Management.", pro: "Next.js App Router, SSR, Server Actions." },
-      python: { name: "Python", beginner: "List, Dict, Functions & modular scripts.", inter: "FastAPI REST Server, Web Scraping Playwright.", pro: "Asyncio Concurrency & Model AI Integration." },
-      cpp: { name: "C++", beginner: "Pointer, Memory Reference (&), Variables.", inter: "OOP, Standard Template Library (STL Vector).", pro: "Modern C++20 Concepts, Coroutines & Qt GUI." },
-      cybersec: { name: "CyberSec & TKJ", beginner: "Model 7 Layer OSI, Subnetting IPv4 CIDR.", inter: "Wireshark Packet Analysis, VLAN Routing.", pro: "Mitigasi OWASP Top 10, TLS 1.3 Handshake." }
-    };
-
-    const polyglot = {
-      es: [
-        { word: "El libro", type: "Noun", phon: "/el 'li.βɾo/", id: "Buku", en: "Book" },
-        { word: "Aprender", type: "Verb", phon: "/a.pɾen'deɾ/", id: "Belajar", en: "To learn" },
-        { word: "El dinero", type: "Noun", phon: "/el di'ne.ɾo/", id: "Uang", en: "Money" }
+    let state = {
+      lang: 'id', // 'id' or 'en'
+      cursorTheme: 'bunny', // 'bunny', 'cat', 'star', 'boba', 'heart'
+      xp: 420,
+      streak: 5,
+      activeLang: 'react',
+      activeTier: 'beginner',
+      activeTargetLang: 'es',
+      finance: {
+        income: 6500000,
+        spaylater: 650000,
+        autodebit: 1000000,
+        subs: 220000,
+        needs: 2500000,
+        vaults: { cash: 450000, ewallet: 1400000, bank: 13000000 }
+      },
+      items: [
+        { id: 1, name: "Ijazah SMA & Sertifikat Kuliah", location: "Lemari Utama Kamar, Rak 2 Map Plastik Biru" },
+        { id: 2, name: "Buku Paspor & Buku Nikah", location: "Laci Meja Kerja Tengah, Kotak Kayu Cokelat" },
+        { id: 3, name: "Kabel HDMI & Charger Cadangan", location: "Boks Transparan di Bawah Tempat Tidur" },
+        { id: 4, name: "Buku Rekening Bank & Token BCA", location: "Laci Samping Kasur, Dompet Hitam Kecil" }
       ],
-      ko: [
-        { word: "책 (Chaek)", type: "Noun", phon: "[chaek]", id: "Buku", en: "Book" },
-        { word: "공부하다 (Gongbu)", type: "Verb", phon: "[gong-bu]", id: "Belajar", en: "To study" },
-        { word: "돈 (Don)", type: "Noun", phon: "[don]", id: "Uang", en: "Money" }
-      ],
-      ar: [
-        { word: "كِتَاب (Kitaab)", type: "Isim", phon: "[ki-taa-bun]", id: "Buku", en: "Book" },
-        { word: "تَعَلَّمَ (Ta'allama)", type: "Fi'il", phon: "[ta-'al-la-ma]", id: "Belajar", en: "To learn" },
-        { word: "مَال (Maal)", type: "Isim", phon: "[maa-lun]", id: "Uang", en: "Money" }
+      tasks: [
+        { id: 1, title: "Bayar Tagihan SPayLater sebelum tanggal jatuh tempo", urgency: "high", date: "2026-10-05", done: false },
+        { id: 2, title: "Latihan percakapan bahasa Spanyol di Kafe (5 kata)", urgency: "mid", date: "2026-09-30", done: false },
+        { id: 3, title: "Coba rancang 1 komponen custom Hook di React", urgency: "low", date: "2026-10-02", done: false }
       ]
     };
 
-    function init() {
-      renderFabrics();
-      renderTech();
-      renderPoly();
-      renderStash();
-      renderTodos();
-      renderVault();
-      calcFinance();
-      updateApiKeyStatus();
+    function saveToStorage() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    function renderFabrics() {
-      document.getElementById('fabricGrid').innerHTML = fabrics.map(f => `
-        <div class="bg-pastel-pink/30 border border-pastel-pink p-3.5 rounded-2xl space-y-1">
-          <div class="text-xl">${f.icon}</div>
-          <h4 class="font-bold text-xs text-cocoa-dark">${f.name}</h4>
-          <p class="text-[11px] text-cocoa-soft">${currentLang === 'id' ? f.desc_id : f.desc_en}</p>
-        </div>
-      `).join('');
-    }
-
-    function renderTech() {
-      const list = document.getElementById('techLangList');
-      list.innerHTML = Object.keys(techCatalog).map(k => `
-        <button onclick="pickTech('${k}')" class="px-3 py-1 rounded-xl transition ${techPick === k ? 'bg-pastel-lavender text-purple-950 font-bold border border-purple-300' : 'bg-white border border-gray-200 text-cocoa-soft'}">
-          ${techCatalog[k].name}
-        </button>
-      `).join('');
-
-      const cur = techCatalog[techPick];
-      document.getElementById('techContentBox').innerHTML = `
-        <h4 class="font-bold text-xs text-cocoa-dark">${cur.name} — Tingkat <span class="capitalize text-purple-800">${techLvl}</span></h4>
-        <p class="text-xs text-cocoa-soft mt-1.5">${cur[techLvl]}</p>
-      `;
-    }
-
-    function pickTech(k) { techPick = k; renderTech(); }
-    function filterTechLvl(lvl) {
-      techLvl = lvl;
-      ['beginner', 'intermediate', 'pro'].forEach(l => {
-        const b = document.getElementById('btn-t' + l[0]);
-        b.className = l === lvl ? "px-2.5 py-1 rounded-xl bg-pastel-lavender text-purple-900 font-bold" : "px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600 font-semibold";
-      });
-      renderTech();
-    }
-
-    function renderPoly() {
-      document.getElementById('polyglotCards').innerHTML = polyglot[polyPick].map(p => `
-        <div class="bg-white border border-pastel-pink p-3 rounded-2xl space-y-1">
-          <div class="flex justify-between items-center">
-            <h4 class="font-bold text-sm text-cocoa-dark">${p.word}</h4>
-            <span class="text-[10px] bg-pastel-yellow text-amber-900 px-2 py-0.5 rounded-full font-bold">${p.type}</span>
-          </div>
-          <div class="text-[10px] text-pink-600 font-mono">${p.phon}</div>
-          <div class="text-xs font-semibold text-cocoa-dark">Arti: ${currentLang === 'id' ? p.id : p.en}</div>
-        </div>
-      `).join('');
-    }
-
-    function setLangPick(l) {
-      polyPick = l;
-      ['es', 'ko', 'ar'].forEach(x => {
-        const b = document.getElementById('pl-' + x);
-        b.className = x === l ? "px-2.5 py-1 rounded-xl bg-pastel-pink text-[#8A3347] font-bold" : "px-2.5 py-1 rounded-xl bg-gray-100 text-gray-600 font-semibold";
-      });
-      renderPoly();
-    }
-
-    /* ---------------- GEMINI AI LIVE INTEGRATION ---------------- */
-    function openApiModal() { document.getElementById('apiModal').classList.remove('hidden'); }
-    function closeApiModal() { document.getElementById('apiModal').classList.add('hidden'); }
-    function saveApiKey() {
-      const val = document.getElementById('geminiApiKeyInput').value.trim();
-      if (val) {
-        localStorage.setItem('mochi_gemini_key', val);
-        updateApiKeyStatus();
-        closeApiModal();
+    function loadFromStorage() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          state = { ...state, ...parsed };
+        } catch (e) {
+          console.error("Gagal membaca LocalStorage:", e);
+        }
       }
     }
-    function updateApiKeyStatus() {
-      const key = localStorage.getItem('mochi_gemini_key');
-      const btn = document.getElementById('apiKeyBtnText');
-      if (key) {
-        btn.innerText = "Gemini AI: Terhubung ✔";
-        btn.parentElement.classList.add('bg-pastel-mint', 'text-emerald-900');
+
+    /* ----------------------------------------------------
+       THEMATIC CURSOR & COMPANION MASCOT SYSTEM
+    ---------------------------------------------------- */
+    const CURSOR_THEMES = [
+      { id: 'bunny', label: '🐰 Kursor: Kelinci Putih', emoji: '🐰', bubble: 'Hop hop! Kelinci putih siap menemanimu belajar!' },
+      { id: 'cat', label: '🐾 Kursor: Cakar Kucing', emoji: '🐱', bubble: 'Purr~ Cakar kucing pastel bikin kursor makin gemas!' },
+      { id: 'star', label: '⭐ Kursor: Bintang Ajaib', emoji: '🌟', bubble: 'Bintang berkilau memancarkan ide-ide brilianmu!' },
+      { id: 'boba', label: '🧋 Kursor: Boba Matcha', emoji: '🧋', bubble: 'Waktunya rehat sejenak sambil minum boba manis~' },
+      { id: 'heart', label: '💖 Kursor: Pixel Heart', emoji: '💖', bubble: 'Jaga hatimu tetap tenang dan nikmati prosesnya!' }
+    ];
+
+    function applyCursorTheme(themeId) {
+      document.body.className = `cursor-${themeId}`;
+      const found = CURSOR_THEMES.find(t => t.id === themeId) || CURSOR_THEMES[0];
+      document.getElementById('cursorThemeIcon').innerText = found.label;
+      document.getElementById('mascotEmoji').innerText = found.emoji;
+      document.getElementById('mascotIconHeader').innerText = found.emoji;
+      state.cursorTheme = themeId;
+      saveToStorage();
+    }
+
+    function cycleCursorTheme() {
+      const currentIndex = CURSOR_THEMES.findIndex(t => t.id === state.cursorTheme);
+      const nextIndex = (currentIndex + 1) % CURSOR_THEMES.length;
+      applyCursorTheme(CURSOR_THEMES[nextIndex].id);
+      sayMascot(CURSOR_THEMES[nextIndex].bubble);
+    }
+
+    function petMascot() {
+      addRewardXP(5, "Menyapa Maskot!");
+      const cheerQuotes = [
+        "Kamu hebat sudah konsisten belajar hari ini! 🌸",
+        "Belajar 10 menit setiap hari lebih manjur daripada 5 jam sekaligus! ✨",
+        "Ingat minum air putih dan istirahatkan mata sejenak ya! 💧",
+        "Keren banget! Pengetahuanmu makin luas di segala bidang! 📚",
+        "Pelan-pelan saja, yang penting tidak berhenti berkembang! 🐾"
+      ];
+      const randomQuote = cheerQuotes[Math.floor(Math.random() * cheerQuotes.length)];
+      sayMascot(randomQuote);
+    }
+
+    function sayMascot(text) {
+      const bubble = document.getElementById('mascotSpeech');
+      bubble.innerText = text;
+      bubble.style.animation = 'none';
+      void bubble.offsetWidth; // trigger reflow
+      bubble.style.animation = 'floatBubble 3s ease-in-out infinite';
+    }
+
+    /* ----------------------------------------------------
+       GAMIFICATION XP & LEVELING
+    ---------------------------------------------------- */
+    function addRewardXP(points, reason) {
+      state.xp += points;
+      const level = Math.floor(state.xp / 150) + 1;
+      state.level = level;
+      document.getElementById('userXP').innerText = state.xp;
+      document.getElementById('userLevel').innerText = level;
+      saveToStorage();
+      sayMascot(`🎉 +${points} XP didapatkan: ${reason}`);
+    }
+
+    /* ----------------------------------------------------
+       TAB NAVIGATION
+    ---------------------------------------------------- */
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+      
+      const targetPanel = document.getElementById(`view-${tabId}`);
+      if (targetPanel) targetPanel.classList.add('active');
+
+      const tabs = Array.from(document.querySelectorAll('.tab-item'));
+      const activeBtn = tabs.find(b => b.getAttribute('onclick').includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    /* ----------------------------------------------------
+       BILINGUAL (ID / EN) TRANSLATION ENGINE
+    ---------------------------------------------------- */
+    const I18N = {
+      id: {
+        brandTag: "Wawasan Cerdas & Sahabat Hidupmu",
+        btnFeedOffline: "💾 Tersimpan Offline",
+        btnFeedOnline: "✨ AI Discovery Feed",
+        subtext: "💡 Rangkuman visual ringkas anti-bosan",
+        vocabTitle: "📖 Kamus Kosakata Per-Kata (Word Flashcards)",
+        currentLang: "ID | B. Indonesia"
+      },
+      en: {
+        brandTag: "Smart Knowledge & Life Companion",
+        btnFeedOffline: "💾 Offline Saved",
+        btnFeedOnline: "✨ AI Live Discovery",
+        subtext: "💡 Bite-sized visual micro-learning cards",
+        vocabTitle: "📖 Word-by-Word Vocabulary Flashcards",
+        currentLang: "EN | English"
+      }
+    };
+
+    function toggleLanguage() {
+      state.lang = state.lang === 'id' ? 'en' : 'id';
+      applyLanguage(state.lang);
+      saveToStorage();
+    }
+
+    function applyLanguage(l) {
+      document.getElementById('brandTagline').innerText = I18N[l].brandTag;
+      document.getElementById('btnFeedOffline').innerText = I18N[l].btnFeedOffline;
+      document.getElementById('btnFeedOnline').innerText = I18N[l].btnFeedOnline;
+      document.getElementById('wawasanSubtext').innerText = I18N[l].subtext;
+      document.getElementById('vocabHeaderTitle').innerText = I18N[l].vocabTitle;
+      document.getElementById('currentLangText').innerText = I18N[l].currentLang;
+
+      // Update tab labels
+      document.querySelectorAll('.tab-label').forEach(el => {
+        el.innerText = el.getAttribute(`data-${l}`);
+      });
+
+      renderCodingRoadmap();
+      renderLanguageSection();
+    }
+
+    function toggleFeedMode(mode) {
+      document.getElementById('btnFeedOffline').classList.toggle('active', mode === 'saved');
+      document.getElementById('btnFeedOnline').classList.toggle('active', mode === 'online');
+
+      if (mode === 'online') {
+        sayMascot("🌐 AI menyaring 4 insight baru dari portal global pagi ini!");
       } else {
-        btn.innerText = "Setup Gemini AI";
+        sayMascot("💾 Menampilkan catatan wawasan offline Anda!");
       }
     }
 
-    async function generateWithGemini() {
-      const key = localStorage.getItem('mochi_gemini_key');
-      const topic = document.getElementById('aiTopicInput').value.trim();
-      if (!key) { alert('Silakan masukkan Gemini API Key terlebih dahulu di menu atas!'); openApiModal(); return; }
-      if (!topic) return;
-
-      const spinner = document.getElementById('aiGeneratingSpinner');
-      spinner.classList.remove('hidden');
-
-      try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{
-                text: `Buatkan materi wawasan ringkas, visual, dan ramah pemula tentang "${topic}". Formatkan jawaban murni sebagai JSON valid dengan struktur:
-                {
-                  "title_id": "Judul dalam Bahasa Indonesia",
-                  "title_en": "Title in English",
-                  "points_id": ["Poin visual 1", "Poin visual 2", "Poin visual 3"],
-                  "points_en": ["Visual point 1", "Visual point 2", "Visual point 3"]
-                }
-                Jangan berikan kata pembuka atau format markdown lain di luar blok JSON.`
-              }]
-            }]
-          })
-        });
-
-        const data = await response.json();
-        let rawText = data.candidates[0].content.parts[0].text;
-        rawText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
-        const parsed = JSON.parse(rawText);
-
-        aiVault.unshift({
-          id: Date.now(),
-          topic: topic,
-          ...parsed
-        });
-        localStorage.setItem('ml_aivault', JSON.stringify(aiVault));
-        document.getElementById('aiTopicInput').value = '';
-        renderVault();
-      } catch (err) {
-        alert('Gagal mengambil data dari Gemini: ' + err.message);
-      } finally {
-        spinner.classList.add('hidden');
+    /* ----------------------------------------------------
+       CODING CAMPUS DATABASE (JS, PY, C++, C#, PHP, JAVA, SQL, HTML/CSS, REACT)
+    ---------------------------------------------------- */
+    const CODING_DATA = {
+      react: {
+        title: "ReactJS Framework",
+        beginner: {
+          concept: "Komponen, JSX, dan State Dasar (useState)",
+          snippet: `function Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <button onClick={() => setCount(count + 1)}>\n      Diklik: {count} kali 🌸\n    </button>\n  );\n}`,
+          useCase: "Membangun tombol interaktif dan form dinamis tanpa manipulasi DOM manual."
+        },
+        intermediate: {
+          concept: "Custom Hooks, Context API, dan Axios Fetching",
+          snippet: `function useOnlineStatus() {\n  const [isOnline, setIsOnline] = useState(navigator.onLine);\n  useEffect(() => {\n    const ping = () => setIsOnline(navigator.onLine);\n    window.addEventListener('online', ping);\n    return () => window.removeEventListener('online', ping);\n  }, []);\n  return isOnline;\n}`,
+          useCase: "Memisahkan logika bisnis dari UI agar kode dapat digunakan kembali di banyak komponen."
+        },
+        pro: {
+          concept: "Next.js SSR, State Cache (TanStack Query), Clean Arch",
+          snippet: `export async function getServerSideProps() {\n  const res = await fetch('https://api.internal/vault');\n  const initialData = await res.json();\n  return { props: { initialData } };\n}`,
+          useCase: "Membangun aplikasi skala enterprise berkecepatan tinggi dengan SEO maksimal."
+        }
+      },
+      javascript: {
+        title: "JavaScript (ES6+)",
+        beginner: {
+          concept: "Tipe Data, Arrow Functions, Array Methods (map, filter)",
+          snippet: `const prices = [15000, 25000, 50000];\nconst withTax = prices.map(p => p * 1.11);\nconsole.log(withTax);`,
+          useCase: "Mengolah daftar angka dan teks dalam memori secara instan."
+        },
+        intermediate: {
+          concept: "Async/Await, Promises, dan Event Loop Microtask",
+          snippet: `async function fetchUserData(userId) {\n  try {\n    const res = await fetch('/api/user/' + userId);\n    return await res.json();\n  } catch (err) {\n    console.error("Gagal sinkron:", err);\n  }\n}`,
+          useCase: "Mengambil data server di latar belakang tanpa membekukan tampilan antarmuka."
+        },
+        pro: {
+          concept: "Memory Leak Prevention, WeakMap, Proxy & Reflect",
+          snippet: `const reactiveObj = new Proxy(target, {\n  set(obj, prop, value) {\n    console.log(\`Mengubah \${prop} jadi \${value}\`);\n    obj[prop] = value;\n    return true;\n  }\n});`,
+          useCase: "Membangun reactive engine internal seperti Vue reactivity atau custom observer."
+        }
+      },
+      python: {
+        title: "Python 3",
+        beginner: {
+          concept: "List Comprehension, Dictionary, dan Struktur Kendali",
+          snippet: `expenses = {"kopi": 25000, "buku": 85000, "lunch": 35000}\ntotal = sum(expenses.values())\nprint(f"Total jajan: Rp{total:,}")`,
+          useCase: "Skrip otomasi harian dan perhitungan matematika ringkas."
+        },
+        intermediate: {
+          concept: "Decorators, Generators, dan FastAPI Endpoints",
+          snippet: `from fastapi import FastAPI\napp = FastAPI()\n\n@app.get("/safe-budget")\ndef get_budget():\n    return {"safe_daily": 75000, "status": "Aman"}`,
+          useCase: "Membangun microservice backend modern yang sangat cepat dan terdokumentasi otomatis."
+        },
+        pro: {
+          concept: "Metaclasses, Concurrency Asyncio, Pipeline Data AI",
+          snippet: `import asyncio\nasync def worker(task_id):\n    await asyncio.sleep(1)\n    print(f"Selesai olah data model {task_id}")`,
+          useCase: "Menjalankan pemrosesan ribuan data embedding AI secara paralel."
+        }
+      },
+      csharp: {
+        title: "C# (.NET)",
+        beginner: {
+          concept: "Type Safety, Class, Properties, dan LINQ Dasar",
+          snippet: `var highExpenses = expenses.Where(x => x.Amount > 100000).ToList();`,
+          useCase: "Menyaring koleksi data transaksi finansial secara elegan."
+        },
+        intermediate: {
+          concept: "Dependency Injection, Entity Framework Core",
+          snippet: `public class FinanceService : IFinanceService {\n    private readonly AppDbContext _db;\n    public FinanceService(AppDbContext db) => _db = db;\n}`,
+          useCase: "Membangun arsitektur backend perbankan yang kokoh dan modular."
+        },
+        pro: {
+          concept: "Memory<T>, Span<T>, High-Performance Microservices",
+          snippet: `ReadOnlySpan<char> slice = rawText.AsSpan(0, 10);`,
+          useCase: "Memproses jutaan pesan data finansial per detik tanpa alokasi memori berlebih."
+        }
+      },
+      php: {
+        title: "PHP 8 (Modern)",
+        beginner: {
+          concept: "Variabel Superglobal, Array Asosiatif, Sanitasi Form",
+          snippet: `$nominal = filter_input(INPUT_POST, 'nominal', FILTER_VALIDATE_INT);`,
+          useCase: "Menerima kiriman form pengeluaran secara aman dari antarmuka web."
+        },
+        intermediate: {
+          concept: "Composer, OOP Namespaces, Laravel Eloquent ORM",
+          snippet: `$urgentTasks = Task::where('urgency', 'high')->where('done', false)->get();`,
+          useCase: "Mengelola relasi database aplikasi web skala menengah secara produktif."
+        },
+        pro: {
+          concept: "JIT Compiler Optimization, Fiber Asynchronous, RoadRunner",
+          snippet: `$fiber = new Fiber(function(): void {\n    $val = Fiber::suspend('paused');\n});`,
+          useCase: "Menjalankan daemon PHP mandiri berkemampuan konkurensi tinggi."
+        }
+      },
+      java: {
+        title: "Java (Spring Ecosystem)",
+        beginner: {
+          concept: "OOP Dasar, Encapsulation, ArrayList, Try-Catch",
+          snippet: `List<String> list = new ArrayList<>();\nlist.add("Buku Paspor");`,
+          useCase: "Dasar aplikasi enterprise dan pengembangan Android native."
+        },
+        intermediate: {
+          concept: "Spring Boot REST Controller & Stream API",
+          snippet: `@GetMapping("/vault")\npublic ResponseEntity<Vault> getVault() {\n    return ResponseEntity.ok(vaultService.getBalance());\n}`,
+          useCase: "Standar industri pembuatan backend API perbankan dan e-commerce."
+        },
+        pro: {
+          concept: "Virtual Threads (Project Loom), JVM Memory Tuning (G1GC)",
+          snippet: `try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {\n    executor.submit(() -> fetchBankAPI());\n}`,
+          useCase: "Melayani jutaan koneksi bersamaan dengan jejak memori yang sangat hemat."
+        }
+      },
+      cpp: {
+        title: "C++ (Modern C++20)",
+        beginner: {
+          concept: "Pointer, Reference, dan STL Vector",
+          snippet: `#include <vector>\nstd::vector<int> cash = {50000, 20000};\ncash.push_back(100000);`,
+          useCase: "Pemahaman langsung alokasi memori fisik komputer."
+        },
+        intermediate: {
+          concept: "Smart Pointers (std::unique_ptr), RAII, Move Semantics",
+          snippet: `auto wallet = std::make_unique<VaultRecord>("BCA", 13000000);`,
+          useCase: "Manajemen memori otomatis anti memory-leak pada aplikasi desktop & game."
+        },
+        pro: {
+          concept: "Template Metaprogramming, SIMD, Low-Latency Trading Engine",
+          snippet: `template<typename T> concept Numeric = std::is_arithmetic_v<T>;`,
+          useCase: "Mesin simulasi fisika game dan sistem transaksi saham frekuensi tinggi."
+        }
+      },
+      sql: {
+        title: "SQL (Structured Query Language)",
+        beginner: {
+          concept: "SELECT, WHERE, ORDER BY, dan INSERT",
+          snippet: `SELECT nama_barang, lokasi FROM barang_fisik WHERE lokasi LIKE '%Kamar%';`,
+          useCase: "Mencari catatan barang yang disimpan di dalam ruangan spesifik."
+        },
+        intermediate: {
+          concept: "INNER JOIN, GROUP BY, Aggregate Functions (SUM, AVG)",
+          snippet: `SELECT kategori, SUM(jumlah) as total_keluar \nFROM pengeluaran \nGROUP BY kategori;`,
+          useCase: "Mengelompokkan pos pengeluaran bulanan untuk evaluasi dompet."
+        },
+        pro: {
+          concept: "Indexing Strategies (B-Tree), Window Functions, CTE",
+          snippet: `WITH RunningTotal AS (\n  SELECT tgl, nominal, SUM(nominal) OVER (ORDER BY tgl) as saldo\n  FROM mutasi_bank\n)\nSELECT * FROM RunningTotal;`,
+          useCase: "Menghitung mutasi saldo berjalan (running balance) secara performan di jutaan baris."
+        }
+      },
+      htmlcss: {
+        title: "HTML5 & Modern CSS",
+        beginner: {
+          concept: "Semantic Tags (<main>, <article>), Flexbox & Grid",
+          snippet: `.card-container {\n  display: flex;\n  gap: 16px;\n  border-radius: 20px;\n}`,
+          useCase: "Membangun kerangka tampilan web yang rapi dan responsif di smartphone."
+        },
+        intermediate: {
+          concept: "CSS Variables, Media Queries, Micro-animations",
+          snippet: `:root { --pastel-pink: #ffb7c5; }\n@media (max-width: 600px) { ... }`,
+          useCase: "Menata sistem tema warna pastel dan transisi lembut saat elemen disentuh."
+        },
+        pro: {
+          concept: "CSS Container Queries, Fluid Typography (clamp), GPU-accelerated transforms",
+          snippet: `h1 { font-size: clamp(1.2rem, 2.5vw, 2.4rem); }`,
+          useCase: "Memastikan layout antarmuka sempurna di semua ukuran layar tanpa lag sedikit pun."
+        }
       }
+    };
+
+    function setCodingLang(langKey) {
+      state.activeLang = langKey;
+      document.querySelectorAll('.lang-chip').forEach(c => {
+        c.classList.toggle('active', c.getAttribute('onclick').includes(langKey));
+      });
+      renderCodingRoadmap();
     }
 
-    function renderVault() {
-      const c = document.getElementById('aiVaultItems');
-      if (aiVault.length === 0) {
-        c.innerHTML = `<div class="text-xs text-cocoa-soft text-center py-4 bg-gray-50 rounded-2xl">Belum ada materi AI tersimpan. Ketik topik di atas untuk mulai membuat materi!</div>`;
+    function setCodingTier(tierKey) {
+      state.activeTier = tierKey;
+      document.getElementById('btnTierBeginner').classList.toggle('active', tierKey === 'beginner');
+      document.getElementById('btnTierIntermediate').classList.toggle('active', tierKey === 'intermediate');
+      document.getElementById('btnTierPro').classList.toggle('active', tierKey === 'pro');
+      renderCodingRoadmap();
+    }
+
+    function renderCodingRoadmap() {
+      const lang = CODING_DATA[state.activeLang];
+      const tierData = lang[state.activeTier];
+      const tierNames = { beginner: "Tingkat 1: Beginner (Pemula)", intermediate: "Tingkat 2: Intermediate (Menengah)", pro: "Tingkat 3: Pro / Production-Ready" };
+
+      const html = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div>
+            <span class="k-badge badge-mint">${lang.title}</span>
+            <h2 class="card-title">${tierNames[state.activeTier]}</h2>
+          </div>
+          <button class="pill-btn" onclick="addRewardXP(20, 'Menyelesaikan modul koding!')">✨ Selesai Baca (+20 XP)</button>
+        </div>
+        <p style="font-weight: 700; margin-bottom: 6px; font-size: 0.95rem;">💡 Konsep Utama:</p>
+        <p class="card-text">${tierData.concept}</p>
+        <div class="code-box">${tierData.snippet}</div>
+        <div style="background: rgba(255,255,255,0.8); border: 1.5px solid var(--border-soft); padding: 12px 16px; border-radius: 14px; font-size: 0.85rem;">
+          💼 <strong>Penerapan Nyata di Industri:</strong> ${tierData.useCase}
+        </div>
+      `;
+      document.getElementById('codingContentBox').innerHTML = html;
+    }
+
+    /* ----------------------------------------------------
+       LANGUAGE LOUNGE (SPANISH, KOREAN, ARABIC)
+    ---------------------------------------------------- */
+    const LANG_DATA = {
+      es: {
+        name: "Spanyol (Español)",
+        words: [
+          { native: "Gracias", phonetic: "GRAH-syahs", meaning: "Terima kasih", type: "Kata Ungkapan" },
+          { native: "Por favor", phonetic: "por fah-VOR", meaning: "Tolong / Silakan", type: "Frasa Santun" },
+          { native: "Amigo / Amiga", phonetic: "ah-MEE-goh", meaning: "Teman / Sahabat", type: "Kata Benda" },
+          { native: "Hermoso", phonetic: "er-MOH-soh", meaning: "Indah / Cantik", type: "Kata Sifat" },
+          { native: "Comer", phonetic: "koh-MEHR", meaning: "Makan", type: "Kata Kerja" },
+          { native: "Agua", phonetic: "AH-gwah", meaning: "Air", type: "Kata Benda" }
+        ],
+        convo: {
+          title: "☕ Memesan Kopi di Kafe (En la Cafetería)",
+          dialog: [
+            { speaker: "Kamu", text: "¡Hola! Un café con leche, por favor.", breakdown: "Hola (Halo) + Un (Satu) + café con leche (kopi susu) + por favor (tolong)" },
+            { speaker: "Barista", text: "¿Para tomar aquí o para llevar?", breakdown: "Untuk diminum di sini (tomar aquí) atau dibawa pulang (llevar)?" },
+            { speaker: "Kamu", text: "Para tomar aquí. Muchas gracias.", breakdown: "Untuk minum di sini. Terima kasih banyak." }
+          ]
+        }
+      },
+      ko: {
+        name: "Korea (한국어)",
+        words: [
+          { native: "감사합니다", phonetic: "gam-sa-ham-ni-da", meaning: "Terima kasih (Formal)", type: "Ungkapan Santun" },
+          { native: "안녕하세요", phonetic: "an-nyeong-ha-se-yo", meaning: "Halo / Selamat Pagi/Sore", type: "Salam Harian" },
+          { native: "친구", phonetic: "chin-gu", meaning: "Teman", type: "Kata Benda" },
+          { native: "맛있어요", phonetic: "ma-si-sseo-yo", meaning: "Enak / Lezat", type: "Kata Sifat" },
+          { native: "물", phonetic: "mul", meaning: "Air Minum", type: "Kata Benda" },
+          { native: "얼마예요?", phonetic: "eol-ma-ye-yo?", meaning: "Berapa harganya?", type: "Frasa Tanya" }
+        ],
+        convo: {
+          title: "🛍️ Bertanya Harga di Toko Souvenir",
+          dialog: [
+            { speaker: "Kamu", text: "이거 얼마예요? (Igeo eolmayeyo?)", breakdown: "Igeo (Benda ini) + eolmayeyo (Berapa harganya?)" },
+            { speaker: "Kasir", text: "오천 원이에요. (Ocheon-won-ieyo.)", breakdown: "Ocheon (5.000) + won (Mata uang Korea) + ieyo (adalah)" },
+            { speaker: "Kamu", text: "네, 이거 하나 주세요! (Ne, igeo hana juseyo!)", breakdown: "Ne (Ya) + igeo (ini) + hana (satu buah) + juseyo (tolong berikan)!" }
+          ]
+        }
+      },
+      ar: {
+        name: "Arab (العربية)",
+        words: [
+          { native: "شُكْراً", phonetic: "syuk-ran", meaning: "Terima kasih", type: "Ungkapan" },
+          { native: "مَرْحَباً", phonetic: "mar-ha-ban", meaning: "Halo / Selamat Datang", type: "Salam Harian" },
+          { native: "صَدِيق", phonetic: "sha-diiq", meaning: "Teman / Sahabat", type: "Kata Benda" },
+          { native: "جَمِيل", phonetic: "ja-miil", meaning: "Indah / Bagus", type: "Kata Sifat" },
+          { native: "مَاء", phonetic: "maa'", meaning: "Air Minum", type: "Kata Benda" },
+          { native: "كَمِ الثَّمَن؟", phonetic: "kamits-tsaman?", meaning: "Berapa harganya?", type: "Frasa Tanya" }
+        ],
+        convo: {
+          title: "🤝 Berkenalan dan Menyapa Teman Baru",
+          dialog: [
+            { speaker: "Teman", text: "السَّلَامُ عَلَيْكُمْ (As-salamu 'alaykum)", breakdown: "Semoga keselamatan tercurah kepadamu" },
+            { speaker: "Kamu", text: "وَعَلَيْكُمُ السَّلَامُ، كَيْفَ حَالُكَ؟ (Wa 'alaykumus-salam, kayfa haluk?)", breakdown: "Dan bagimu keselamatan, bagaimana kabarmu?" },
+            { speaker: "Teman", text: "بِخَيْرٍ، الحَمْدُ للهِ (Bi-khayrin, alhamdulillah)", breakdown: "Baik-baik saja, segala puji bagi Tuhan" }
+          ]
+        }
+      }
+    };
+
+    function setTargetLang(langKey) {
+      state.activeTargetLang = langKey;
+      document.getElementById('btnLangES').classList.toggle('active', langKey === 'es');
+      document.getElementById('btnLangKO').classList.toggle('active', langKey === 'ko');
+      document.getElementById('btnLangAR').classList.toggle('active', langKey === 'ar');
+      renderLanguageSection();
+    }
+
+    function renderLanguageSection() {
+      const data = LANG_DATA[state.activeTargetLang];
+      
+      // Flashcards
+      let cardsHtml = '';
+      data.words.forEach(w => {
+        cardsHtml += `
+          <div class="vocab-card" onclick="addRewardXP(5, 'Menghafal kosakata ${w.native}')">
+            <div class="vocab-native">${w.native}</div>
+            <div class="vocab-phonetic">${w.phonetic}</div>
+            <div class="vocab-meaning">${w.meaning}</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">[${w.type}]</div>
+          </div>
+        `;
+      });
+      document.getElementById('vocabGrid').innerHTML = cardsHtml;
+
+      // Conversation
+      let convoHtml = `<h4 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--pastel-pink-dark);">${data.convo.title}</h4>`;
+      data.convo.dialog.forEach(d => {
+        convoHtml += `
+          <div style="background: white; border: 1.5px solid var(--border-soft); padding: 12px; border-radius: 14px; margin-bottom: 10px;">
+            <div style="font-weight: 800; font-size: 0.85rem; color: var(--text-mocha); margin-bottom: 2px;">${d.speaker}:</div>
+            <div style="font-size: 1.15rem; font-weight: 700; color: #2d3748; margin-bottom: 4px;">${d.text}</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-style: italic;">🔍 Bedah Kata: ${d.breakdown}</div>
+          </div>
+        `;
+      });
+      document.getElementById('conversationBox').innerHTML = convoHtml;
+    }
+
+    /* ----------------------------------------------------
+       SMART FINANCE BENTO CALCULATOR
+    ---------------------------------------------------- */
+    function calculateFinance() {
+      const income = parseFloat(document.getElementById('inIncome').value) || 0;
+      const spaylater = parseFloat(document.getElementById('inSPayLater').value) || 0;
+      const autodebit = parseFloat(document.getElementById('inAutoDebit').value) || 0;
+      const subs = parseFloat(document.getElementById('inSubs').value) || 0;
+      const needs = parseFloat(document.getElementById('inNeeds').value) || 0;
+
+      const totalObligations = spaylater + autodebit + subs + needs;
+      const safeSpend = Math.max(0, income - totalObligations);
+      const safeDailySpend = Math.floor(safeSpend / 30);
+      const debtRatio = income > 0 ? ((spaylater / income) * 100).toFixed(1) : 0;
+
+      document.getElementById('valSafeSpend').innerText = `Rp ${safeSpend.toLocaleString('id-ID')}`;
+      document.getElementById('valDailySpend').innerText = `Rp ${safeDailySpend.toLocaleString('id-ID')}`;
+
+      // Debt indicator
+      const ratioElem = document.getElementById('txtHealthRatio');
+      if (debtRatio > 30) {
+        ratioElem.innerHTML = `⚠️ Rasio Cicilan SPayLater: <strong>${debtRatio}%</strong> (Hati-hati! Di atas ambang batas 30% pendapatan)`;
+        ratioElem.style.color = "#d90429";
+      } else {
+        ratioElem.innerHTML = `✅ Rasio Cicilan SPayLater: <strong>${debtRatio}%</strong> (Sehat Aman di bawah 30% 🟢)`;
+        ratioElem.style.color = "var(--text-mocha)";
+      }
+
+      state.finance.income = income;
+      state.finance.spaylater = spaylater;
+      state.finance.autodebit = autodebit;
+      state.finance.subs = subs;
+      state.finance.needs = needs;
+      saveToStorage();
+    }
+
+    function updateNetWorth() {
+      const cash = parseFloat(document.getElementById('vaultCash').value) || 0;
+      const ewallet = parseFloat(document.getElementById('vaultEWallet').value) || 0;
+      const bank = parseFloat(document.getElementById('vaultBank').value) || 0;
+      const total = cash + ewallet + bank;
+
+      document.getElementById('valNetWorth').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+      state.finance.vaults = { cash, ewallet, bank };
+      saveToStorage();
+    }
+
+    /* ----------------------------------------------------
+       ITEM LOCATOR & TO-DO ENGINE
+    ---------------------------------------------------- */
+    function renderItems(filterQuery = '') {
+      const container = document.getElementById('itemListContainer');
+      const filtered = state.items.filter(item => 
+        item.name.toLowerCase().includes(filterQuery.toLowerCase()) ||
+        item.location.toLowerCase().includes(filterQuery.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.88rem;">Tidak ditemukan barang dengan kata kunci tersebut.</div>`;
         return;
       }
-      c.innerHTML = aiVault.map(v => `
-        <div class="bg-white border border-pastel-mint p-4 rounded-2xl space-y-2">
-          <div class="flex justify-between items-center">
-            <h4 class="font-bold text-xs text-cocoa-dark">${currentLang === 'id' ? v.title_id : v.title_en}</h4>
-            <span class="text-[10px] bg-pastel-mint text-emerald-900 px-2 py-0.5 rounded-full font-bold">Offline Vault</span>
+
+      container.innerHTML = filtered.map(item => `
+        <div class="item-row">
+          <div>
+            <div style="font-weight: 800; font-size: 0.9rem;">📂 ${item.name}</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">📍 ${item.location}</div>
           </div>
-          <ul class="text-[11px] text-cocoa-soft space-y-1 list-disc list-inside">
-            ${(currentLang === 'id' ? v.points_id : v.points_en).map(p => `<li>${p}</li>`).join('')}
-          </ul>
+          <button class="pill-btn" style="padding: 4px 10px;" onclick="deleteItem(${item.id})">Hapus</button>
         </div>
       `).join('');
     }
 
-    /* ---------------- STASH & TODO ---------------- */
-    function renderStash() {
-      document.getElementById('stashDisplay').innerHTML = stash.map(s => `
-        <div class="bg-white p-2 rounded-xl border border-gray-100 flex justify-between items-center text-xs">
-          <div><div class="font-bold">${s.name}</div><div class="text-[10px] text-cocoa-soft">📍 ${s.loc}</div></div>
-          <button onclick="delStash(${s.id})" class="text-red-400 font-bold px-1">✕</button>
-        </div>
-      `).join('');
-    }
-    function addStash() {
-      const n = document.getElementById('stName').value.trim();
-      const l = document.getElementById('stLoc').value.trim();
-      if (!n || !l) return;
-      stash.unshift({ id: Date.now(), name: n, loc: l });
-      localStorage.setItem('ml_stash', JSON.stringify(stash));
-      document.getElementById('stName').value = '';
-      document.getElementById('stLoc').value = '';
-      renderStash();
-    }
-    function delStash(id) {
-      stash = stash.filter(x => x.id !== id);
-      localStorage.setItem('ml_stash', JSON.stringify(stash));
-      renderStash();
+    function filterItems() {
+      const query = document.getElementById('itemSearchInput').value;
+      renderItems(query);
     }
 
-    function renderTodos() {
-      const sorted = [...todos].sort((a,b) => a.prio - b.prio);
-      document.getElementById('todoDisplay').innerHTML = sorted.map(t => `
-        <div class="bg-white p-2 rounded-xl border border-gray-100 flex justify-between items-center text-xs ${t.done ? 'opacity-50 line-through' : ''}">
-          <div class="flex items-center gap-2">
-            <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTodo(${t.id})">
-            <div>
-              <div class="font-bold">${t.task}</div>
-              <div class="text-[10px] text-cocoa-soft">${t.prio === 1 ? '🔥 Sangat Mendesak' : '📅 Normal'}</div>
+    function addNewLocationItem() {
+      const nameInput = document.getElementById('newDocName');
+      const locInput = document.getElementById('newDocLocation');
+      if (!nameInput.value.trim() || !locInput.value.trim()) {
+        alert("Mohon isi nama barang dan lokasi simpan.");
+        return;
+      }
+
+      state.items.unshift({
+        id: Date.now(),
+        name: nameInput.value.trim(),
+        location: locInput.value.trim()
+      });
+
+      nameInput.value = '';
+      locInput.value = '';
+      saveToStorage();
+      renderItems();
+      addRewardXP(10, "Menambahkan catatan barang fisik!");
+    }
+
+    function deleteItem(id) {
+      state.items = state.items.filter(i => i.id !== id);
+      saveToStorage();
+      renderItems();
+    }
+
+    function renderTasks() {
+      const container = document.getElementById('taskListContainer');
+      // Sort: High urgency first, then date
+      const urgencyScore = { high: 1, mid: 2, low: 3 };
+      const sorted = [...state.tasks].sort((a, b) => {
+        if (a.done !== b.done) return a.done ? 1 : -1;
+        return urgencyScore[a.urgency] - urgencyScore[b.urgency];
+      });
+
+      container.innerHTML = sorted.map(t => {
+        const dotClass = t.urgency === 'high' ? 'urg-high' : t.urgency === 'mid' ? 'urg-mid' : 'urg-low';
+        return `
+          <div class="task-item ${t.done ? 'completed' : ''}">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="urgency-dot ${dotClass}"></span>
+              <div>
+                <div style="font-size: 0.88rem; font-weight: 700;">${t.title}</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">📅 Tenggat: ${t.date || 'Tanpa deadline'}</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button class="pill-btn" style="padding: 4px 10px;" onclick="toggleTaskDone(${t.id})">
+                ${t.done ? '↩️ Batal' : '✅ Selesai'}
+              </button>
+              <button class="pill-btn" style="padding: 4px 8px;" onclick="deleteTask(${t.id})">✕</button>
             </div>
           </div>
-          <button onclick="delTodo(${t.id})" class="text-red-400 font-bold px-1">✕</button>
-        </div>
-      `).join('');
-    }
-    function addTodo() {
-      const t = document.getElementById('tdText').value.trim();
-      const p = parseInt(document.getElementById('tdPrio').value);
-      if (!t) return;
-      todos.unshift({ id: Date.now(), task: t, prio: p, done: false });
-      localStorage.setItem('ml_todos', JSON.stringify(todos));
-      document.getElementById('tdText').value = '';
-      renderTodos();
-    }
-    function toggleTodo(id) {
-      const x = todos.find(i => i.id === id);
-      if (x) { x.done = !x.done; localStorage.setItem('ml_todos', JSON.stringify(todos)); renderTodos(); }
-    }
-    function delTodo(id) {
-      todos = todos.filter(x => x.id !== id);
-      localStorage.setItem('ml_todos', JSON.stringify(todos));
-      renderTodos();
+        `;
+      }).join('');
     }
 
-    /* ---------------- FINANCE SAFE-TO-SPEND ---------------- */
-    function calcFinance() {
-      const inc = parseFloat(document.getElementById('fnIncome').value) || 0;
-      const spay = parseFloat(document.getElementById('fnSpaylater').value) || 0;
-      const auto = parseFloat(document.getElementById('fnAutoDebit').value) || 0;
-      const subs = parseFloat(document.getElementById('fnSubs').value) || 0;
-      const live = parseFloat(document.getElementById('fnLiving').value) || 0;
-      const days = Math.max(1, parseFloat(document.getElementById('fnDays').value) || 1);
+    function addNewTask() {
+      const titleInput = document.getElementById('newTaskTitle');
+      const urgency = document.getElementById('newTaskUrgency').value;
+      const date = document.getElementById('newTaskDate').value;
 
-      const safe = Math.max(0, inc - (spay + auto + subs + live));
-      const daily = Math.round(safe / days);
+      if (!titleInput.value.trim()) {
+        alert("Mohon ketik nama tugas terlebih dahulu!");
+        return;
+      }
 
-      document.getElementById('safeSpendVal').innerText = 'Rp ' + safe.toLocaleString('id-ID');
-      document.getElementById('dailySafeVal').innerHTML = `Rp ${daily.toLocaleString('id-ID')} <span class="text-xs font-normal">/ hari</span>`;
-    }
-
-    /* ---------------- E-READER LOCAL FILE ---------------- */
-    function loadLocalFile(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        document.getElementById('readerTitle').innerText = file.name;
-        document.getElementById('readerContent').innerText = event.target.result;
-      };
-      reader.readAsText(file);
-    }
-
-    /* ---------------- GLOBAL CONTROLS ---------------- */
-    function switchTab(t) {
-      ['wawasan', 'tech', 'polyglot', 'ai-prompt', 'stash', 'finance', 'reader'].forEach(x => {
-        document.getElementById('panel-' + x).classList.toggle('hidden', x !== t);
-        const b = document.getElementById('nav-' + x);
-        if (x === t) {
-          b.className = "tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition bg-pastel-pink text-[#7A3343]";
-        } else {
-          b.className = "tab-btn flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-left transition hover:bg-pastel-lavender/60 text-cocoa-dark";
-        }
+      state.tasks.push({
+        id: Date.now(),
+        title: titleInput.value.trim(),
+        urgency,
+        date: date || 'Hari ini',
+        done: false
       });
+
+      titleInput.value = '';
+      saveToStorage();
+      renderTasks();
+      addRewardXP(10, "Menyusun jadwal tugas baru!");
     }
 
-    function toggleLang() {
-      currentLang = currentLang === 'id' ? 'en' : 'id';
-      document.getElementById('langIndicator').innerText = currentLang === 'id' ? 'ID ⇄ EN' : 'EN ⇄ ID';
-      renderFabrics();
-      renderVault();
-      renderPoly();
+    function toggleTaskDone(id) {
+      const task = state.tasks.find(t => t.id === id);
+      if (task) {
+        task.done = !task.done;
+        if (task.done) addRewardXP(20, "Menuntaskan tugas prioritas!");
+        saveToStorage();
+        renderTasks();
+      }
     }
 
-    function setTheme(t) {
-      const b = document.getElementById('appBody');
-      b.classList.remove('cursor-bunny', 'cursor-boba', 'cursor-cat');
-      b.classList.add('cursor-' + t);
-      const iconMap = { bunny: '🐰', boba: '🧋', cat: '🐾' };
-      document.getElementById('mascotIcon').innerText = iconMap[t] || '🐰';
+    function deleteTask(id) {
+      state.tasks = state.tasks.filter(t => t.id !== id);
+      saveToStorage();
+      renderTasks();
     }
 
-    window.onload = init;
+    /* ----------------------------------------------------
+       E-BOOK READER ENGINE (EYE-CARE MODAL)
+    ---------------------------------------------------- */
+    const EBOOK_CONTENT = {
+      atomic: {
+        title: "Atomic Habits Ringkas - James Clear",
+        body: `
+          <p>Perubahan kecil yang konsisten sebesar <strong>1% setiap hari</strong> akan melipatgandakan hasil Anda hingga <strong>37 kali lipat dalam satu tahun</strong>.</p>
+          <br/>
+          <h4 style="color: var(--pastel-pink-dark);">4 Hukum Perubahan Perilaku:</h4>
+          <ol style="margin-left: 20px; margin-top: 8px;">
+            <li><strong>Jadikan Terlihat (Make it Obvious):</strong> Letakkan barang pendukung di tempat yang langsung terlihat mata.</li>
+            <li><strong>Jadikan Menarik (Make it Attractive):</strong> Pasangkan kegiatan belajar dengan reward menyenangkan (misal mendengarkan musik santai).</li>
+            <li><strong>Jadikan Mudah (Make it Easy):</strong> Terapkan Aturan 2 Menit (Two-Minute Rule). Mulai belajar hanya 2 menit pertama tanpa tekanan.</li>
+            <li><strong>Jadikan Memuaskan (Make it Satisfying):</strong> Berikan reward XP atau checklist seketika saat tugas rampung.</li>
+          </ol>
+        `
+      },
+      astrophysics: {
+        title: "Astrophysics for People in a Hurry - N.D. Tyson",
+        body: `
+          <p>Semesta berawal dari titik singularitas tak terhingga sekitar <strong>13,8 miliar tahun yang lalu</strong>. Seluruh materi penyusun tubuh kita—mulai dari zat besi di darah hingga kalsium di tulang—ditempa di inti bintang yang meledak (Supernova).</p>
+          <br/>
+          <p><strong>Fakta Menarik Kosmos:</strong> Materi kasat mata (seperti galaksi, planet, dan manusia) hanya mencakup sekitar 5% dari total semesta. Sisanya adalah <em>Dark Matter</em> (27%) dan <em>Dark Energy</em> (68%) yang sifatnya masih menjadi misteri terbesar sains modern.</p>
+        `
+      },
+      social: {
+        title: "Seni Berbicara Kepada Siapa Saja - Leil Lowndes",
+        body: `
+          <p>Kunci percakapan yang menyenangkan bukan terletak pada seberapa pintar kita berbicara, melainkan <strong>seberapa nyaman kita membuat orang lain bercerita tentang dirinya sendiri</strong>.</p>
+          <br/>
+          <h4 style="color: var(--pastel-pink-dark);">3 Trik Instan Kedekatan:</h4>
+          <ul style="margin-left: 20px; margin-top: 8px;">
+            <li><strong>Teknik The Flooding Smile:</strong> Jangan langsung tersenyum seketika saat melihat orang. Tatap wajahnya 1 detik, lalu biarkan senyuman hangat mengembang perlahan di wajah.</li>
+            <li><strong>Parrot Technique:</strong> Ulangi 2-3 kata terakhir yang diucapkan lawan bicara Anda dengan nada ramah untuk merangsang mereka melanjutkan cerita.</li>
+          </ul>
+        `
+      },
+      stoisisme: {
+        title: "Filosofi Teras (Stoisisme) - Henry Manampiring",
+        body: `
+          <p>Stoisisme mengajarkan konsep <strong>Dikotomi Kendali (Dikotomi of Control)</strong>:</p>
+          <div style="background: rgba(0,0,0,0.05); padding: 14px; border-radius: 12px; margin: 12px 0;">
+            <p><strong>1. Hal di Bawah Kendali Kita:</strong> Pertimbangan kita, tindakan, opini, nilai moral, dan cara merespons kejadian.</p>
+            <p style="margin-top: 6px;"><strong>2. Hal di Luar Kendali Kita:</strong> Opini orang lain, macet di jalan, cuaca, ekonomi global, dan hasil akhir masa depan.</p>
+          </div>
+          <p>Kedamaian batin (Ataraxia) tercapai ketika kita 100% mencurahkan energi hanya pada hal yang berada di bawah kendali kita.</p>
+        `
+      }
+    };
+
+    function openEBook(bookKey) {
+      const book = EBOOK_CONTENT[bookKey];
+      if (!book) return;
+      document.getElementById('ebookModalTitle').innerText = book.title;
+      document.getElementById('ebookModalBody').innerHTML = book.body;
+      document.getElementById('ebookModal').classList.add('active');
+    }
+
+    function closeEBook() {
+      document.getElementById('ebookModal').classList.remove('active');
+    }
+
+    function closeEBookModal(e) {
+      if (e.target.id === 'ebookModal') closeEBook();
+    }
+
+    function setReaderTheme(theme) {
+      const box = document.getElementById('ebookReaderBox');
+      box.className = `reader-box theme-${theme}`;
+    }
+
+    /* ----------------------------------------------------
+       INITIALIZATION
+    ---------------------------------------------------- */
+    window.addEventListener('DOMContentLoaded', () => {
+      loadFromStorage();
+      applyCursorTheme(state.cursorTheme);
+      applyLanguage(state.lang);
+      calculateFinance();
+      updateNetWorth();
+      renderItems();
+      renderTasks();
+    });
   </script>
 </body>
 </html>
